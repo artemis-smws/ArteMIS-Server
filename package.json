@@ -1,0 +1,41 @@
+{
+  "name": "artemis-server",
+  "version": "1.0.0",
+  "description": "Server Application for ArteMIS",
+  "main": "src/index",
+  "scripts": {
+    "start": "nodemon src/index",
+    "serve": "npm run start && firebase emulators:start --only functions",
+    "shell": "npm run start && firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchadenKai/ArteMIS-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SchadenKai/ArteMIS-Server/issues"
+  },
+  "homepage": "https://github.com/SchadenKai/ArteMIS-Server#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "firebase": "^9.19.1",
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0",
+    "helmet": "^6.1.5"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "firebase-functions-test": "^3.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "16"
+  }
+}
