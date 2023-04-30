@@ -4,8 +4,7 @@ const router = express.Router()
 router.use(express.urlencoded({extended: true}))
 
 router.route('/')
-    .get((req, res) => {
-        res.send("Successfully fetched data!")
-    })
+    .get()
+    .post()
 
 module.exports = router

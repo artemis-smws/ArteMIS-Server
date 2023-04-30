@@ -1,8 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getAnalytics, isSupported } from "firebase/analytics";
-import { getFirestore } from "firebase-admin/firestore";
+const { initializeApp } = require("firebase/app")
+const {getAnalytics, isSupported} = require("firebase/analytics")
+const {getFirestore} = require("firebase/firestore")
 
-const config = require('./config/config')
+const config = require('./config/config.js')
 
 const firebase = initializeApp(config.firebaseConfig);
 

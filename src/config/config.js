@@ -1,8 +1,8 @@
 "use-strict";
-const dotenv = require("dotenv");
+require('dotenv').config()
 const assert = require("assert");
 
-dotenv.config();
+
 
 const {
   API_KEY,
@@ -11,10 +11,13 @@ const {
   STORAGE_BUCKET,
   MESSAGING_SENDER_ID,
   APP_ID,
-  MEAUSUREMENT_ID
+  MEASUREMENT_ID
 } = process.env;
 
-assert(API_KEY, "API Key is required");
+if(process.env.NODE_ENV === 'production') {
+    assert(API_KEY, "API Key is required");
+}
+
 
 module.exports = {
   firebaseConfig: {
@@ -24,6 +27,6 @@ module.exports = {
     storageBucket: STORAGE_BUCKET,
     messagingSenderId: MESSAGING_SENDER_ID,
     appId: APP_ID,
-    measurementId: MEAUSUREMENT_ID,
+    measurementId: MEASUREMENT_ID,
   },
 };

@@ -1,0 +1,235 @@
+[debug] [2023-04-25T13:44:45.620Z] ----------------------------------------------------------------------
+[debug] [2023-04-25T13:44:45.623Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kairu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2023-04-25T13:44:45.624Z] CLI Version:   11.28.0
+[debug] [2023-04-25T13:44:45.624Z] Platform:      win32
+[debug] [2023-04-25T13:44:45.624Z] Node Version:  v16.17.1
+[debug] [2023-04-25T13:44:45.625Z] Time:          Tue Apr 25 2023 21:44:45 GMT+0800 (Taipei Standard Time)
+[debug] [2023-04-25T13:44:45.625Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-25T13:44:45.725Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-25T13:44:45.726Z] > authorizing via signed-in user (artemis.batstateu@gmail.com)
+[debug] [2023-04-25T13:44:45.726Z] [iam] checking project artemis-b18ae for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-25T13:44:45.728Z] > refreshing access token with scopes: []
+[debug] [2023-04-25T13:44:45.730Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-04-25T13:44:45.730Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-25T13:44:46.756Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2023-04-25T13:44:46.756Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2023-04-25T13:44:46.766Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions [none]
+[debug] [2023-04-25T13:44:46.766Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:44:46.766Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-25T13:44:48.204Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions 200
+[debug] [2023-04-25T13:44:48.204Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-25T13:44:48.204Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-25T13:44:48.204Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-25T13:44:50.249Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-25T13:44:50.250Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'artemis-b18ae'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-25T13:44:50.254Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae [none]
+[debug] [2023-04-25T13:44:51.191Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae 200
+[debug] [2023-04-25T13:44:51.191Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae {"projectId":"artemis-b18ae","projectNumber":"393084857275","displayName":"ArteMIS","name":"projects/artemis-b18ae","resources":{"hostingSite":"artemis-b18ae","storageBucket":"artemis-b18ae.appspot.com","locationId":"asia-east2"},"state":"ACTIVE","etag":"1_2cb6f5b5-0b90-4791-8c01-5a4201d6f617"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-25T13:44:51.195Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-25T13:44:51.195Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:44:51.196Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-25T13:44:51.196Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:44:51.197Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-25T13:44:51.197Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:44:51.198Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-25T13:44:51.198Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:44:53.143Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-25T13:44:53.143Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-25T13:44:53.158Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-25T13:44:53.158Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-25T13:44:53.273Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-25T13:44:53.273Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-25T13:44:53.372Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-25T13:44:53.372Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-25T13:44:53.373Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae/adminSdkConfig [none]
+[debug] [2023-04-25T13:44:53.835Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae/adminSdkConfig 200
+[debug] [2023-04-25T13:44:53.836Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae/adminSdkConfig {"projectId":"artemis-b18ae","storageBucket":"artemis-b18ae.appspot.com","locationId":"asia-east2"}
+[debug] [2023-04-25T13:44:53.836Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/artemis-b18ae/configs [none]
+[debug] [2023-04-25T13:44:55.224Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/artemis-b18ae/configs 200
+[debug] [2023-04-25T13:44:55.225Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/artemis-b18ae/configs {}
+[debug] [2023-04-25T13:44:55.226Z] Validating nodejs source
+[debug] [2023-04-25T13:44:57.232Z] > [functions] package.json contents: {
+  "name": "artemis-server",
+  "version": "1.0.0",
+  "description": "Server Application for ArteMIS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "serve": "npm run start && firebase emulators:start --only functions",
+    "shell": "npm run start && firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchadenKai/ArteMIS-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SchadenKai/ArteMIS-Server/issues"
+  },
+  "homepage": "https://github.com/SchadenKai/ArteMIS-Server#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "firebase": "^9.19.1",
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0",
+    "helmet": "^6.1.5"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "firebase-functions-test": "^3.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "16"
+  }
+}
+[debug] [2023-04-25T13:44:57.233Z] Building nodejs source
+[debug] [2023-04-25T13:44:57.233Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-25T13:44:57.247Z] Found firebase-functions binary at 'C:\Users\kairu\OneDrive\Documents\GitHub\ArteMIS-Server\node_modules\.bin\firebase-functions'
+[debug] [2023-04-25T13:44:57.688Z] Serving at port 8406
+
+[debug] [2023-04-25T13:44:58.809Z] FetchError: request to http://localhost:8406/__/quitquitquit failed, reason: connect ECONNREFUSED 127.0.0.1:8406
+    at ClientRequest.<anonymous> (C:\Users\kairu\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\node-fetch\lib\index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:481:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:157:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-25T13:47:18.961Z] ----------------------------------------------------------------------
+[debug] [2023-04-25T13:47:18.964Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kairu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2023-04-25T13:47:18.965Z] CLI Version:   11.28.0
+[debug] [2023-04-25T13:47:18.965Z] Platform:      win32
+[debug] [2023-04-25T13:47:18.965Z] Node Version:  v16.17.1
+[debug] [2023-04-25T13:47:18.966Z] Time:          Tue Apr 25 2023 21:47:18 GMT+0800 (Taipei Standard Time)
+[debug] [2023-04-25T13:47:18.967Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-25T13:47:19.067Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-25T13:47:19.068Z] > authorizing via signed-in user (artemis.batstateu@gmail.com)
+[debug] [2023-04-25T13:47:19.068Z] [iam] checking project artemis-b18ae for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-25T13:47:19.071Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions [none]
+[debug] [2023-04-25T13:47:19.071Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:47:19.071Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-25T13:47:20.306Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions 200
+[debug] [2023-04-25T13:47:20.306Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-25T13:47:20.307Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-25T13:47:20.307Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-25T13:47:22.014Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-25T13:47:22.015Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'artemis-b18ae'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-25T13:47:22.022Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae [none]
+[debug] [2023-04-25T13:47:24.046Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae 200
+[debug] [2023-04-25T13:47:24.046Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae {"projectId":"artemis-b18ae","projectNumber":"393084857275","displayName":"ArteMIS","name":"projects/artemis-b18ae","resources":{"hostingSite":"artemis-b18ae","storageBucket":"artemis-b18ae.appspot.com","locationId":"asia-east2"},"state":"ACTIVE","etag":"1_2cb6f5b5-0b90-4791-8c01-5a4201d6f617"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-25T13:47:24.051Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-25T13:47:24.052Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:47:24.053Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-25T13:47:24.053Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:47:24.054Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-25T13:47:24.054Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:47:24.055Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-25T13:47:24.055Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com x-goog-quota-user=projects/artemis-b18ae
+[debug] [2023-04-25T13:47:25.584Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-25T13:47:25.585Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/artifactregistry.googleapis.com [omitted]
+[info] +  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-25T13:47:25.589Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-25T13:47:25.589Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-25T13:47:25.599Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-25T13:47:25.599Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudfunctions.googleapis.com [omitted]
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-25T13:47:25.691Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-25T13:47:25.691Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/artemis-b18ae/services/cloudbuild.googleapis.com [omitted]
+[info] +  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-25T13:47:25.693Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae/adminSdkConfig [none]
+[debug] [2023-04-25T13:47:26.355Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae/adminSdkConfig 200
+[debug] [2023-04-25T13:47:26.355Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/artemis-b18ae/adminSdkConfig {"projectId":"artemis-b18ae","storageBucket":"artemis-b18ae.appspot.com","locationId":"asia-east2"}
+[debug] [2023-04-25T13:47:26.356Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/artemis-b18ae/configs [none]
+[debug] [2023-04-25T13:47:26.814Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/artemis-b18ae/configs 200
+[debug] [2023-04-25T13:47:26.814Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/artemis-b18ae/configs {}
+[debug] [2023-04-25T13:47:26.816Z] Validating nodejs source
+[debug] [2023-04-25T13:47:30.954Z] > [functions] package.json contents: {
+  "name": "artemis-server",
+  "version": "1.0.0",
+  "description": "Server Application for ArteMIS",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js",
+    "serve": "npm run start && firebase emulators:start --only functions",
+    "shell": "npm run start && firebase functions:shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SchadenKai/ArteMIS-Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SchadenKai/ArteMIS-Server/issues"
+  },
+  "homepage": "https://github.com/SchadenKai/ArteMIS-Server#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "firebase": "^9.19.1",
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0",
+    "helmet": "^6.1.5"
+  },
+  "devDependencies": {
+    "cors": "^2.8.5",
+    "firebase-functions-test": "^3.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "engines": {
+    "node": "16"
+  }
+}
+[debug] [2023-04-25T13:47:30.955Z] Building nodejs source
+[debug] [2023-04-25T13:47:30.956Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-25T13:47:30.972Z] Found firebase-functions binary at 'C:\Users\kairu\OneDrive\Documents\GitHub\ArteMIS-Server\node_modules\.bin\firebase-functions'
+[debug] [2023-04-25T13:47:31.216Z] Serving at port 8251
+
+[debug] [2023-04-25T13:47:32.562Z] FetchError: request to http://localhost:8251/__/quitquitquit failed, reason: connect ECONNREFUSED 127.0.0.1:8251
+    at ClientRequest.<anonymous> (C:\Users\kairu\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\node-fetch\lib\index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:481:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:157:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:122:3)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21)
+[error] 
+[error] Error: An unexpected error has occurred.
