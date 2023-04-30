@@ -7,6 +7,7 @@ const functions = require('firebase-functions');
 require('./config/config')
 const binRouter = require('./routes/binRouter')
 const wasteRouter = require('./routes/wasteRouter')
+const trashbinRouter = require('./routes/trashbinRouter')
 
 const PORT =  process.env.PORT || 5656;
 
@@ -23,7 +24,7 @@ app.use(bodyParser.json())
 // routes
 app.use('/bin', binRouter)
 app.use('/waste', wasteRouter)
-
+app.use('/trashbin', trashbinRouter)
 
 app.listen(PORT, () => {
   console.log(`This is listening the http://localhost:${PORT}`);

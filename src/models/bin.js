@@ -1,18 +1,14 @@
 class Bin {
     constructor(
         id,
-        latitude,
-        longitude,
         timestamp,
         capacity,
-        type
+        trashbin
     ) {
         this.id = id
-        this.latitude = latitude
-        this.longitude = longitude
         this.timestamp = timestamp
         this.capacity = capacity
-        this.type = type
+        this.trashbin = trashbin
     }
 }
 

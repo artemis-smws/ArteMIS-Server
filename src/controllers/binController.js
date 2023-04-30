@@ -21,11 +21,9 @@ exports.BinController = {
         snapshot.docs.forEach((docs) => {
           const bin = new Bin(
             docs.id,
-            docs.data().latitude,
-            docs.data().longitude,
             docs.data().timestamp,
             docs.data().capacity,
-            docs.data().type
+            docs.data().trashbin
           );
           data.push(bin);
         });
@@ -54,11 +52,9 @@ exports.BinController = {
         }
         const data = new Bin(
           snapshot.id,
-          snapshot.data().latitude,
-          snapshot.data().longitude,
           snapshot.data().timestamp,
           snapshot.data().capacity,
-          snapshot.data().type
+          snapshot.data().trashbin
         );
         res.send(data);
       });
