@@ -1,10 +1,14 @@
 const express = require('express')
+const { WasteController } = require('../controllers/wasteController')
 const router = express.Router()
 
 router.use(express.urlencoded({extended: true}))
 
 router.route('/')
-    .get()
-    .post()
-
+    .get(WasteController.getAllWaste)
+    .post(WasteController.addWaste)
+router.route('/:id')
+    .get(WasteController.getWaste)
+    .delete(WasteController.deleteWaste)
+    
 module.exports = router

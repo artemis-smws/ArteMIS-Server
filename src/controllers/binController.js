@@ -48,14 +48,17 @@ exports.BinController = {
     try {
       const id = req.params.id;
       const docRef = doc(db, "bin", id);
-      onSnapshot(docRef, (doc) => {
+      onSnapshot(docRef, (snapshot) => {
+        if(!snapshot.exists) {
+            res.send({message : "The data does not exist"})
+        }
         const data = new Bin(
-          doc.id,
-          doc.data().latitude,
-          doc.data().longitude,
-          doc.data().timestamp,
-          doc.data().capacity,
-          doc.data().type
+          snapshot.id,
+          snapshot.data().latitude,
+          snapshot.data().longitude,
+          snapshot.data().timestamp,
+          snapshot.data().capacity,
+          snapshot.data().type
         );
         res.send(data);
       });
