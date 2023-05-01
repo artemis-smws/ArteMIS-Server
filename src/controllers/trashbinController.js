@@ -16,7 +16,7 @@ exports.TrashbinController = {
         res.send(data);
       });
     } catch (e) {
-      res.send({ message: e.message });
+      res.status(500).send({ error: e.message });
     }
   },
   getTrashbin : (req, res) => {
@@ -34,7 +34,7 @@ exports.TrashbinController = {
         res.send(data)
       })
     } catch(e) {
-      res.send({message : e.message})
+      res.status(500).send({error : e.message})
     }
   },
   deleteTrashbin : (req, res) => {
@@ -45,7 +45,7 @@ exports.TrashbinController = {
         res.send({message : `Successfully deleted trash bin :${id}` })
       })
       .catch(e => {
-        res.send({message : e.message})
+        res.status(500).send({error : e.message})
       })
   },
   addTrashbin: (req, res) => {
@@ -61,7 +61,7 @@ exports.TrashbinController = {
         res.send({ message: "successfully added data" });
       })
       .catch((e) => {
-        res.send({ message: e.message });
+        res.status(500).send({ error : e.message });
       });
   },
 };

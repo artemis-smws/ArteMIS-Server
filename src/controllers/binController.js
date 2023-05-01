@@ -18,7 +18,7 @@ exports.BinController = {
       onSnapshot(binRef, (snapshot) => {
         const data = [];
         if (snapshot.docs.length === 0) {
-          res.send({ message: "No trash bin data found" });
+          res.status(404).send({ error : "No trash bin data found" });
         }
         snapshot.docs.forEach((docs) => {
           const bin = new Bin(
@@ -32,7 +32,7 @@ exports.BinController = {
         res.send(data);
       });
     } catch (err) {
-      res.send({ message: err.message });
+      res.status(500).send({ error : err.message });
     }
   },
   addBin: async (req, res) => {
@@ -41,7 +41,7 @@ exports.BinController = {
       await addDoc(binRef, data);
       res.send({ message: "Succesfully added data!" });
     } catch (err) {
-      res.send({ message: err.message });
+      res.status(500).send({ error: err.message });
     }
   },
   getBin: (req, res) => {
@@ -50,7 +50,7 @@ exports.BinController = {
       const docRef = doc(db, "bin", id);
       onSnapshot(docRef, (snapshot) => {
         if(!snapshot.exists) {
-            res.send({message : "The data does not exist"})
+            res.status(404).send({error : "The data does not exist"})
         }
         const data = new Bin(
           snapshot.id,
@@ -61,7 +61,7 @@ exports.BinController = {
         res.send(data);
       });
     } catch (err) {
-      res.send({ message: err.message });
+      res.status(500).send({ error: err.message });
     }
   },
   patchBin : (req, res) => {
@@ -72,7 +72,7 @@ exports.BinController = {
         res.send({message : 'successfully updated the data'})
       })
       .catch(e => {
-        res.send({message : e.message})
+        res.status(500).send({error : e.message})
       })
   }
 };

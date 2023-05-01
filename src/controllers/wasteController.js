@@ -21,7 +21,7 @@ exports.WasteController = {
         res.send(data);
       });
     } catch (e) {
-      res.send({ message: e.message });
+      res.status(500).send({ error: e.message });
     }
   },
   addWaste: (req, res) => {
@@ -35,7 +35,7 @@ exports.WasteController = {
         res.send({ message: "Successfully added data!" });
       })
       .catch((e) => {
-        res.send({ message: e.message });
+        res.status(500).send({ error : e.message });
       });
   },
   getWaste: (req, res) => {
@@ -44,7 +44,7 @@ exports.WasteController = {
     try {
       onSnapshot(docRef, (snapshot) => {
         if(!snapshot.exists) {
-            res.send({message : "The data does not exist"})
+            res.status(404).send({error : "The data does not exist"})
         }
         const data = new Waste(
           snapshot.id,
@@ -55,7 +55,7 @@ exports.WasteController = {
         res.send(data);
       });
     } catch (e) {
-      res.send({ message: e.message });
+      res.status(500).send({ error : e.message });
     }
   },
   deleteWaste: (req, res) => {
@@ -66,7 +66,7 @@ exports.WasteController = {
             res.send({message : "Successfully deleted data"})
         })
         .catch(e => {
-            res.send({message : e.message})
+            res.status(500).send({error : e.message})
         })
   },
   patchWaste : (req, res) => {
@@ -77,7 +77,7 @@ exports.WasteController = {
             res.send({message : "successfully updated the data"})
         })
         .catch(e => {
-            res.send({message : e.message})
+            res.status(500).send({error : e.message})
         })
   }
 };
