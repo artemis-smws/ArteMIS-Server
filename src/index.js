@@ -10,7 +10,7 @@ const wasteRouter = require('./routes/wasteRouter')
 const trashbinRouter = require('./routes/trashbinRouter')
 const authRouter = require('./routes/authRouter')
 
-const PORT =  8012;
+const PORT =  1234;
 
 const app = express();
 
