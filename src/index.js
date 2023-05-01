@@ -8,11 +8,11 @@ require('./config/config')
 const binRouter = require('./routes/binRouter')
 const wasteRouter = require('./routes/wasteRouter')
 const trashbinRouter = require('./routes/trashbinRouter')
+const authRouter = require('./routes/authRouter')
 
 const PORT =  8012;
 
 const app = express();
-
 
 //middlewares
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +25,7 @@ app.use(bodyParser.json())
 app.use('/bin', binRouter)
 app.use('/waste', wasteRouter)
 app.use('/trashbin', trashbinRouter)
+app.use('/auth', authRouter)
 
 app.listen(PORT, () => {
   console.log(`This is listening the http://localhost:${PORT}`);
