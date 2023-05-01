@@ -1,4 +1,4 @@
-const { onSnapshot, collection, addDoc, doc, deleteDoc } = require("firebase/firestore");
+const { onSnapshot, collection, addDoc, doc, deleteDoc, updateDoc } = require("firebase/firestore");
 const db = require("../firebase");
 const Waste = require("../models/waste");
 
@@ -64,6 +64,17 @@ exports.WasteController = {
     deleteDoc(docRef)
         .then(() => {
             res.send({message : "Successfully deleted data"})
+        })
+        .catch(e => {
+            res.send({message : e.message})
+        })
+  },
+  patchWaste : (req, res) => {
+    const id = req.params.id
+    const docRef = doc(db, 'waste', id)
+    updateDoc(docRef, req.body)
+        .then(() => {
+            res.send({message : "successfully updated the data"})
         })
         .catch(e => {
             res.send({message : e.message})

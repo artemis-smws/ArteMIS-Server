@@ -10,5 +10,6 @@ router.route('/')
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
-    
+    .patch(WasteController.patchWaste)
+
 module.exports = router

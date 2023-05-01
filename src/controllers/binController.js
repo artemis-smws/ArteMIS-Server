@@ -5,8 +5,10 @@ const {
   addDoc,
   doc,
   getDoc,
+  updateDoc,
 } = require("firebase/firestore");
 const Bin = require("../models/bin");
+const { onRegressionAlertPublished } = require("firebase-functions/v2/alerts/crashlytics");
 
 const binRef = collection(db, "bin");
 
@@ -62,4 +64,15 @@ exports.BinController = {
       res.send({ message: err.message });
     }
   },
+  patchBin : (req, res) => {
+    const id = req.params.id
+    const docRef = doc(db, 'bin', id)
+    updateDoc(docRef, req.body)
+      .then(() => {
+        res.send({message : 'successfully updated the data'})
+      })
+      .catch(e => {
+        res.send({message : e.message})
+      })
+  }
 };

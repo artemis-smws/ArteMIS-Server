@@ -8,6 +8,7 @@ router.route('/')
 
 router.route('/:id')
     .get(BinController.getBin)
+    .patch(BinController.patchBin)
 
     
 module.exports = router
