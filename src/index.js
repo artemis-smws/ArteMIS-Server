@@ -9,7 +9,7 @@ const binRouter = require('./routes/binRouter')
 const wasteRouter = require('./routes/wasteRouter')
 const trashbinRouter = require('./routes/trashbinRouter')
 
-const PORT =  process.env.PORT || 5656;
+const PORT =  8012;
 
 const app = express();
 
@@ -17,7 +17,7 @@ const app = express();
 //middlewares
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(cors());
+app.use(cors({methods : ['GET' , 'POST', 'PUT', 'DELETE', 'PATCH']}));
 app.use(helmet());
 app.use(bodyParser.json())
 
