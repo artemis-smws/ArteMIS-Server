@@ -11,6 +11,8 @@ isSupported().then((result) => {
     const analytics = getAnalytics(firebase);
   }
 })
-const db = getFirestore()
+
+const db = getFirestore();
 
 module.exports = db
+

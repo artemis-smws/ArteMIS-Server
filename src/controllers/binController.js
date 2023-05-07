@@ -8,7 +8,6 @@ const {
   updateDoc,
 } = require("firebase/firestore");
 const Bin = require("../models/bin");
-const { onRegressionAlertPublished } = require("firebase-functions/v2/alerts/crashlytics");
 
 const binRef = collection(db, "bin");
 

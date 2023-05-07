@@ -1,4 +1,12 @@
-const { onSnapshot, collection, addDoc, doc, deleteDoc, updateDoc } = require("firebase/firestore");
+const {
+  onSnapshot,
+  collection,
+  addDoc,
+  doc,
+  deleteDoc,
+  updateDoc,
+  serverTimestamp,
+} = require("firebase/firestore");
 const db = require("../firebase");
 const Waste = require("../models/waste");
 
@@ -12,9 +20,12 @@ exports.WasteController = {
         snapshot.docs.forEach((doc) => {
           const staged = new Waste(
             doc.id,
-            doc.data().hazwaste,
+            doc.data().location,
+            doc.data().food_waste,
+            doc.data().hazardous_waste,
             doc.data().recyclable,
-            doc.data().residual
+            doc.data().residual,
+            doc.data().createdAt
           );
           data.push(staged);
         });
@@ -26,16 +37,19 @@ exports.WasteController = {
   },
   addWaste: (req, res) => {
     const data = {
-      hazwaste: req.body.hazwaste,
+      location: req.body.location,
+      food_waste : req.body.food_waste,
+      hazardoud_waste : req.body.hazardous_waste,
       recyclable: req.body.recyclable,
       residual: req.body.residual,
+      createdAt : serverTimestamp()
     };
     addDoc(wasteRef, data)
       .then(() => {
         res.send({ message: "Successfully added data!" });
       })
       .catch((e) => {
-        res.status(500).send({ error : e.message });
+        res.status(500).send({ error: e.message });
       });
   },
   getWaste: (req, res) => {
@@ -43,41 +57,44 @@ exports.WasteController = {
     const docRef = doc(db, "waste", id);
     try {
       onSnapshot(docRef, (snapshot) => {
-        if(!snapshot.exists) {
-            res.status(404).send({error : "The data does not exist"})
+        if (!snapshot.exists) {
+          res.status(404).send({ error: "The data does not exist" });
         }
         const data = new Waste(
           snapshot.id,
-          snapshot.data().hazwaste,
+          snapshot.data().location,
+          snapshot.data().food_waste,
+          snapshot.data().hazardous_waste,
           snapshot.data().recyclable,
-          snapshot.data().residual
+          snapshot.data().residual,
+          snapshot.data().createdAt
         );
         res.send(data);
       });
     } catch (e) {
-      res.status(500).send({ error : e.message });
+      res.status(500).send({ error: e.message });
     }
   },
   deleteWaste: (req, res) => {
-    const id = req.params.id
-    const docRef = doc(db, 'waste', id)
+    const id = req.params.id;
+    const docRef = doc(db, "waste", id);
     deleteDoc(docRef)
-        .then(() => {
-            res.send({message : "Successfully deleted data"})
-        })
-        .catch(e => {
-            res.status(500).send({error : e.message})
-        })
+      .then(() => {
+        res.send({ message: "Successfully deleted data" });
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e.message });
+      });
   },
-  patchWaste : (req, res) => {
-    const id = req.params.id
-    const docRef = doc(db, 'waste', id)
+  patchWaste: (req, res) => {
+    const id = req.params.id;
+    const docRef = doc(db, "waste", id);
     updateDoc(docRef, req.body)
-        .then(() => {
-            res.send({message : "successfully updated the data"})
-        })
-        .catch(e => {
-            res.status(500).send({error : e.message})
-        })
-  }
+      .then(() => {
+        res.send({ message: "successfully updated the data" });
+      })
+      .catch((e) => {
+        res.status(500).send({ error: e.message });
+      });
+  },
 };

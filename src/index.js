@@ -8,7 +8,12 @@ require('./config/config')
 const binRouter = require('./routes/binRouter')
 const wasteRouter = require('./routes/wasteRouter')
 const trashbinRouter = require('./routes/trashbinRouter')
-const authRouter = require('./routes/authRouter')
+const authRouter = require('./routes/authRouter');
+
+const { initializeApp } = require('firebase-admin');
+const { getFirestore } = require('firebase-admin/firestore');
+const admin = initializeApp()
+const db_admin = getFirestore()
 
 const PORT =  1234;
 
@@ -27,8 +32,18 @@ app.use('/waste', wasteRouter)
 app.use('/trashbin', trashbinRouter)
 app.use('/auth', authRouter)
 
+app.post('/test', (req, res) => {
+  const data = {
+    testing : "data"
+  }
+  db_admin.collection('waste').add(data)
+})
+
+//post empty field in waste endpoint 
+exports.scheduledPost =  require('./models/scheduledExecution')
+
 app.listen(PORT, () => {
-  console.log(`This is listening the http://localhost:${PORT}`);
+  console.log(`Listening at http://localhost:${PORT}`);
 });
 
 exports.server = functions.https.onRequest(app);

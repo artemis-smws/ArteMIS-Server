@@ -1,16 +1,12 @@
 class Trashbin {
     constructor(
-        longitude,
-        latitude,
+        coordinates,
         type,
-        location,
-        establishment
+        campus
     ) {
-        this.longitude = longitude
-        this.latitude = latitude
+        this.coordinates = coordinates
         this.type = type
-        this.location = location
-        this.establishment = establishment
+        this.campus = campus
     }
 }
 

@@ -25,11 +25,9 @@ exports.TrashbinController = {
     try {
       onSnapshot(docRef, (snapshot) => {
         const data = new Trashbin(
-          snapshot.data().longitude,
-          snapshot.data().latitude,
+          snapshot.data().coordinates,
           snapshot.data().type,
-          snapshot.data().location,
-          snapshot.data().establishment
+          snapshot.data().campus
         )
         res.send(data)
       })
@@ -52,10 +50,9 @@ exports.TrashbinController = {
     const id = req.params.id;
     const docRef = doc(db, "trashbin", id);
     setDoc(docRef, {
-      latitude: req.body.latitude,
-      longitude: req.body.longitude,
-      location: req.body.location,
-      establishment: req.body.establishment,
+      coordinates : req.body.coordinates,
+      type : req.body.type,
+      campus : req.body.campus
     })
       .then(() => {
         res.send({ message: "successfully added data" });

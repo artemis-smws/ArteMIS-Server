@@ -1,12 +1,16 @@
 class Waste {
     constructor(
         id,
-        hazwaste,
+        location,
+        food_waste,
+        hazardous_waste,
         recyclable,
         residual
     ) {
-        this.id = id
-        this.hazwaste = hazwaste,
+        this.id = id,
+        this.location = location,
+        this.food_waste = food_waste,
+        this.hazardous_waste = hazardous_waste,
         this.recyclable = recyclable,
         this.residual = residual
     }
