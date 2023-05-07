@@ -11,11 +11,6 @@ const trashbinRouter = require('./routes/trashbinRouter')
 const authRouter = require('./routes/authRouter');
 const reportsRouter = require('./routes/reportsRouter')
 
-const { initializeApp } = require('firebase-admin');
-const { getFirestore } = require('firebase-admin/firestore');
-const admin = initializeApp()
-const db_admin = getFirestore()
-
 const PORT =  1234;
 
 const app = express();
@@ -33,13 +28,6 @@ app.use('/waste', wasteRouter)
 app.use('/trashbin', trashbinRouter)
 app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
-
-app.post('/test', (req, res) => {
-  const data = {
-    testing : "data"
-  }
-  db_admin.collection('waste').add(data)
-})
 
 //post empty field in waste endpoint 
 exports.scheduledPost =  require('./models/scheduledExecution')

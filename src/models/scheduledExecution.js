@@ -1,9 +1,13 @@
 const functions = require('firebase-functions')
 
 const db = require("../firebase");
+const { addDoc, collection } = require('firebase/firestore');
+
+const wasteRef = collection(db, 'waste')
 
 exports.scheduledPost = functions.pubsub.schedule('0 0 * * *').onRun((context) => {
     const data = {
+        location : "",
         food_waste : {
             weight : 0
         },
@@ -17,6 +21,6 @@ exports.scheduledPost = functions.pubsub.schedule('0 0 * * *').onRun((context) =
             weight : 0
         }
     }
-    admin_db.collection('waste').add(data)
+    addDoc(wasteRef, data)
     return null;
 })
