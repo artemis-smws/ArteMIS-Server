@@ -9,6 +9,7 @@ const binRouter = require('./routes/binRouter')
 const wasteRouter = require('./routes/wasteRouter')
 const trashbinRouter = require('./routes/trashbinRouter')
 const authRouter = require('./routes/authRouter');
+const reportsRouter = require('./routes/reportsRouter')
 
 const { initializeApp } = require('firebase-admin');
 const { getFirestore } = require('firebase-admin/firestore');
@@ -31,6 +32,7 @@ app.use('/bin', binRouter)
 app.use('/waste', wasteRouter)
 app.use('/trashbin', trashbinRouter)
 app.use('/auth', authRouter)
+app.use('/reports', reportsRouter)
 
 app.post('/test', (req, res) => {
   const data = {
