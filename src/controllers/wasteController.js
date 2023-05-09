@@ -6,6 +6,10 @@ const {
   deleteDoc,
   updateDoc,
   serverTimestamp,
+  query,
+  orderBy,
+  limit,
+  getDoc,
 } = require("firebase/firestore");
 const db = require("../firebase");
 const Waste = require("../models/waste");
@@ -35,22 +39,19 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
-  addWaste: (req, res) => {
-    const data = {
-      location: req.body.location,
-      food_waste : req.body.food_waste,
-      hazardoud_waste : req.body.hazardous_waste,
-      recyclable: req.body.recyclable,
-      residual: req.body.residual,
-      createdAt : serverTimestamp()
-    };
-    addDoc(wasteRef, data)
-      .then(() => {
-        res.send({ message: "Successfully added data!" });
-      })
-      .catch((e) => {
-        res.status(500).send({ error: e.message });
+  getLatest: (req, res) => {
+    const latest = query(wasteRef, orderBy("createdAt"), limit(1));
+    try {
+      onSnapshot(latest, (snapshot) => {
+        const data = [];
+        snapshot.docs.forEach((doc) => {
+          data.push({ ...doc.data(), id: doc.id });
+        });
+        res.send(data);
       });
+    } catch (e) {
+      res.status(500).send({error : e.message})
+    }
   },
   getWaste: (req, res) => {
     const id = req.params.id;

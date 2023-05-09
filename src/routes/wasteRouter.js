@@ -4,9 +4,8 @@ const router = express.Router()
 
 router.use(express.urlencoded({extended: true}))
 
-router.route('/')
-    .get(WasteController.getAllWaste)
-    .post(WasteController.addWaste)
+router.get("/", WasteController.getAllWaste)
+router.get("/latest", WasteController.getLatest)
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
