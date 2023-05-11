@@ -11,7 +11,7 @@ const trashbinRouter = require('./routes/trashbinRouter')
 const authRouter = require('./routes/authRouter');
 const reportsRouter = require('./routes/reportsRouter')
 
-const PORT =  1234;
+const PORT =  2345;
 
 const app = express();
 

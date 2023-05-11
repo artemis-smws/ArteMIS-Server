@@ -4,8 +4,12 @@ const router = express.Router()
 
 router.use(express.urlencoded({extended: true}))
 
-router.get("/", WasteController.getAllWaste)
+router.route('/')
+    .get(WasteController.getAllWaste)
+    // testing route - delete at deployment
+    .post(WasteController.postWaste)
 router.get("/latest", WasteController.getLatest)
+
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)

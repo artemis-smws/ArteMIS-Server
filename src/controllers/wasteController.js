@@ -76,6 +76,15 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
+  postWaste : (req, res) => {
+    addDoc(wasteRef, req.body)
+      .then(() => {
+        res.send({message : "Successfully added data"})
+      })
+      .catch(e => {
+        res.send({message : e.message})
+      })
+  },
   deleteWaste: (req, res) => {
     const id = req.params.id;
     const docRef = doc(db, "waste", id);
