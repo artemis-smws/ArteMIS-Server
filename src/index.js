@@ -30,7 +30,8 @@ app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
 
 //post empty field in waste endpoint 
-exports.scheduledPost =  require('./models/scheduledExecution')
+exports.wasteSchedPost =  require('./models/scheduledExecution')
+exports.yearlyWasteSchedPost = require('./models/scheduledExecution')
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
