@@ -22,16 +22,7 @@ exports.WasteController = {
       const data = [];
       onSnapshot(wasteRef, (snapshot) => {
         snapshot.docs.forEach((doc) => {
-          const staged = new Waste(
-            doc.id,
-            doc.data().location,
-            doc.data().food_waste,
-            doc.data().hazardous_waste,
-            doc.data().recyclable,
-            doc.data().residual,
-            doc.data().createdAt
-          );
-          data.push(staged);
+          data.push({...doc.data(), id : doc.id});
         });
         res.send(data);
       });
