@@ -3,8 +3,12 @@ const db = require("../firebase")
 
 const wasteRef = collection(db, 'waste')
 
-function wasteAverage() {
-    onSnapshot(wasteRef, (snapshot) => {
-
+const wasteAverage = async() => {
+    const data = []
+    await onSnapshot(wasteRef, (snapshot) => {
+        snapshot.docs.forEach(doc => {
+            data.push({...doc.data(), id : doc.id})
+        })
     })
+    
 }
