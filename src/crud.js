@@ -1,12 +1,21 @@
 const { reference } = require("@popperjs/core")
-const { getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc } = require("firebase/firestore")
+const { getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc, setDoc } = require("firebase/firestore")
 const db = require("./firebase")
+const { DocumentReference } = require("firebase-admin/firestore")
 
 exports.CRUD = {
     create : async(reference, passed_data) => {
         try {
             await addDoc(reference, passed_data)
-            return {message : "Successfully posted data!"}
+            return {message : "Succcessfully added data!"}
+        } catch(e) {
+            return {error : e.message}
+        }
+    },
+    createSpecific : async(reference, passed_data) => {
+        try {
+            await setDoc(reference)
+            return {message : "Succcessfully added data!"}
         } catch(e) {
             return {error : e.message}
         }

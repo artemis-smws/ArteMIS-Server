@@ -13,89 +13,64 @@ const {
 } = require("firebase/firestore");
 const db = require("../firebase");
 const Waste = require("../models/waste");
+const { await, CRUD } = require("../crud");
 
 const wasteRef = collection(db, "waste");
 
 exports.WasteController = {
-  getAllWaste: (req, res) => {
+  getAllWaste: async (req, res) => {
     try {
-      const data = [];
-      onSnapshot(wasteRef, (snapshot) => {
-        snapshot.docs.forEach((doc) => {
-          data.push({...doc.data(), id : doc.id});
-        });
-        res.send(data);
-      });
+      const data = await CRUD.readAll(wasteRef);
+      res.send(data);
     } catch (e) {
       res.status(500).send({ error: e.message });
     }
   },
-  getLatest: (req, res) => {
-    const latest = query(wasteRef, orderBy("createdAt"), limit(1));
+  getLatest: async (req, res) => {
+    const latest = query(wasteRef, orderBy("createdAt", "desc"), limit(1));
     try {
-      onSnapshot(latest, (snapshot) => {
-        const data = [];
-        snapshot.docs.forEach((doc) => {
-          data.push({ ...doc.data(), id: doc.id });
-        });
-        res.send(data);
-      });
-    } catch (e) {
-      res.status(500).send({error : e.message})
-    }
-  },
-  getWaste: (req, res) => {
-    const id = req.params.id;
-    const docRef = doc(db, "waste", id);
-    try {
-      onSnapshot(docRef, (snapshot) => {
-        if (!snapshot.exists) {
-          res.status(404).send({ error: "The data does not exist" });
-        }
-        const data = new Waste(
-          snapshot.id,
-          snapshot.data().location,
-          snapshot.data().food_waste,
-          snapshot.data().hazardous_waste,
-          snapshot.data().recyclable,
-          snapshot.data().residual,
-          snapshot.data().createdAt
-        );
-        res.send(data);
-      });
+      const data = await CRUD.readAll(latest);
+      res.send(data);
     } catch (e) {
       res.status(500).send({ error: e.message });
     }
   },
-  postWaste : (req, res) => {
-    addDoc(wasteRef, req.body)
-      .then(() => {
-        res.send({message : "Successfully added data"})
-      })
-      .catch(e => {
-        res.send({message : e.message})
-      })
+  getWaste: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const docRef = doc(db, "waste", id);
+      const data = await CRUD.read(docRef);
+      res.send(data);
+    } catch (e) {
+      res.status(500).send({ error: e.message });
+    }
   },
-  deleteWaste: (req, res) => {
-    const id = req.params.id;
-    const docRef = doc(db, "waste", id);
-    deleteDoc(docRef)
-      .then(() => {
-        res.send({ message: "Successfully deleted data" });
-      })
-      .catch((e) => {
-        res.status(500).send({ error: e.message });
-      });
+  postWaste: async (req, res) => {
+    try {
+      const data = await CRUD.create(wasteRef, req.body);
+      res.send(data);
+    } catch (e) {
+      res.status(500).send({ error: e.message });
+    }
   },
-  patchWaste: (req, res) => {
-    const id = req.params.id;
-    const docRef = doc(db, "waste", id);
-    updateDoc(docRef, req.body)
-      .then(() => {
-        res.send({ message: "successfully updated the data" });
-      })
-      .catch((e) => {
-        res.status(500).send({ error: e.message });
-      });
+  deleteWaste: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const docRef = doc(db, "waste", id);
+      const data = await CRUD.delete(docRef);
+      res.send(data);
+    } catch (e) {
+      res.status(500).send({ error: e.message });
+    }
+  },
+  patchWaste: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const docRef = doc(db, "waste", id);
+      const data = await CRUD.update(docRef, req.body);
+      res.send(data);
+    } catch (e) {
+      res.status(500).send({ error: e.message });
+    }
   },
 };

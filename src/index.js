@@ -9,9 +9,10 @@ const binRouter = require('./routes/binRouter')
 const wasteRouter = require('./routes/wasteRouter')
 const trashbinRouter = require('./routes/trashbinRouter')
 const authRouter = require('./routes/authRouter');
-const reportsRouter = require('./routes/reportsRouter')
+const reportsRouter = require('./routes/reportsRouter');
+const total_yearlyRouter = require('./routes/total_yearlyRouter')
 
-const PORT =  1234;
+const PORT =  2345;
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use(helmet());
 app.use(bodyParser.json())
 
 // routes
+app.use('/total_yearly', total_yearlyRouter)
 app.use('/bin', binRouter)
 app.use('/waste', wasteRouter)
 app.use('/trashbin', trashbinRouter)
