@@ -47,7 +47,9 @@ exports.WasteController = {
   },
   postWaste: async (req, res) => {
     try {
-      const data = await CRUD.create(wasteRef, req.body);
+      const data = await CRUD.create(wasteRef, {
+        ...req.body, createdAt : serverTimestamp()
+      });
       res.send(data);
     } catch (e) {
       res.status(500).send({ error: e.message });
