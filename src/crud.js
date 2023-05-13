@@ -1,7 +1,5 @@
-const { reference } = require("@popperjs/core")
 const { getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc, setDoc } = require("firebase/firestore")
 const db = require("./firebase")
-const { DocumentReference } = require("firebase-admin/firestore")
 
 exports.CRUD = {
     create : async(reference, passed_data) => {
