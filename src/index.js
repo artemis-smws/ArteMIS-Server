@@ -12,7 +12,7 @@ const authRouter = require('./routes/authRouter');
 const reportsRouter = require('./routes/reportsRouter');
 const total_yearlyRouter = require('./routes/total_yearlyRouter')
 
-const PORT =  2345;
+const PORT =  2512;
 
 const app = express();
 
@@ -31,9 +31,10 @@ app.use('/trashbin', trashbinRouter)
 app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
 
-//post empty field in waste endpoint 
-exports.wasteSchedPost =  require('./models/scheduledExecution')
-exports.yearlyWasteSchedPost = require('./models/scheduledExecution')
+//scheduled functions
+const {wasteSchedPost, yearlyWasteSchedPost} = require('./models/scheduledExecution')
+exports.wasteSchedPost = wasteSchedPost;
+exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
