@@ -6,7 +6,7 @@ const { addDoc, collection, serverTimestamp } = require('firebase/firestore');
 const wasteRef = collection(db, 'waste')
 const yearlyRef = collection(db, 'total_yearly')
 
-exports.wasteSchedPost = functions.pubsub.schedule('0 0 * * *').onRun((context) => {
+exports.wasteSchedPost = functions.pubsub.schedule('5 0 * * *').onRun((context) => {
     const data = {
         createdAt : serverTimestamp()
     }

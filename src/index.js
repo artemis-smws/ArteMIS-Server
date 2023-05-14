@@ -12,7 +12,7 @@ const authRouter = require('./routes/authRouter');
 const reportsRouter = require('./routes/reportsRouter');
 const total_yearlyRouter = require('./routes/total_yearlyRouter')
 
-const PORT =  2512;
+const PORT =  2532;
 
 const app = express();
 
@@ -32,7 +32,7 @@ app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
 
 //scheduled functions
-const {wasteSchedPost, yearlyWasteSchedPost} = require('./models/scheduledExecution')
+const {wasteSchedPost, yearlyWasteSchedPost} = require('./middlewares/scheduledExecution')
 exports.wasteSchedPost = wasteSchedPost;
 exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
 

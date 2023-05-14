@@ -12,7 +12,7 @@ exports.CRUD = {
     },
     createSpecific : async(reference, passed_data) => {
         try {
-            await setDoc(reference)
+            await setDoc(reference, passed_data)
             return {message : "Succcessfully added data!"}
         } catch(e) {
             return {error : e.message}
