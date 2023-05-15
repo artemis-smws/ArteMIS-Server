@@ -8,6 +8,7 @@ const yearlyRef = collection(db, 'total_yearly')
 
 exports.wasteSchedPost = functions.pubsub.schedule('5 0 * * *').onRun((context) => {
     const data = {
+        overall_weight : 0,
         createdAt : serverTimestamp()
     }
     addDoc(wasteRef, data)

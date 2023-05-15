@@ -12,25 +12,9 @@ const {
   getDoc,
 } = require("firebase/firestore");
 const db = require("../firebase");
-const Waste = require("../models/waste");
 const { CRUD } = require("../crud");
-const { getAverage, getTotalWeight } = require("../middlewares/getAverage");
 
 const wasteRef = collection(db, "waste");
-
-
-// add business logic functions here
-async function applyBusinessLogic() { 
-  const total_weight = await getTotalWeight(wasteRef)
-  await CRUD.create(wasteRef, {
-    total_weight : total_weight
-  })
-  
-  const ave = await getAverage(wasteRef)
-  await CRUD.create(wasteRef, {
-    total_average : ave
-  })
-}
 
 exports.WasteController = {
   getAllWaste: async (req, res) => {

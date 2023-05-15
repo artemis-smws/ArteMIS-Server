@@ -32,7 +32,7 @@ app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
 
 //scheduled functions
-const {wasteSchedPost, yearlyWasteSchedPost} = require('./middlewares/scheduledExecution')
+const {wasteSchedPost, yearlyWasteSchedPost} = require('./module/scheduledExecution')
 exports.wasteSchedPost = wasteSchedPost;
 exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
 

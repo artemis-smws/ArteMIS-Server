@@ -9,14 +9,13 @@ const { CRUD } = require("../crud");
 
 // reference = collectionReference
 exports.getLatest = async (reference) => {
-  const getLatestQuery = query(
+  const q = query(
     reference,
     orderBy("createdAt", "desc"),
     limit(1)
   );
-  const latest_doc = await CRUD.readAll(getLatestQuery);
-  const latest_id = latest_doc["id"];
-  return latest_id;
+  const latest_doc = await CRUD.readAll(q);
+  return latest_doc;
 };
 
 // reference = collectionReference

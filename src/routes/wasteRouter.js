@@ -2,7 +2,7 @@ const express = require('express')
 const { WasteController } = require('../controllers/wasteController')
 const { collection } = require('firebase/firestore')
 const db = require('../firebase')
-const { calculateAverage } = require('../middlewares/calculateAverage')
+const { calculateTotalMiddleware } = require('../middlewares/calculateTotal')
 const router = express.Router()
 
 const wasteRef = collection(db, 'waste')
@@ -14,10 +14,9 @@ router.route('/')
     // testing route - delete at deployment
     .post(WasteController.postWaste)
 router.get("/latest", WasteController.getLatest)
-
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
-    .patch(calculateAverage(wasteRef), WasteController.patchWaste)
+    .patch(calculateTotalMiddleware , WasteController.patchWaste)
 
 module.exports = router
