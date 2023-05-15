@@ -32,9 +32,10 @@ app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
 
 //scheduled functions
-const {wasteSchedPost, yearlyWasteSchedPost} = require('./module/scheduledExecution')
+const {wasteSchedPost, yearlyWasteSchedPost, statusSchedPostDaily} = require('./module/scheduledExecution')
 exports.wasteSchedPost = wasteSchedPost;
 exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
+exports.statusSchedPostDaily = statusSchedPostDaily;
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
