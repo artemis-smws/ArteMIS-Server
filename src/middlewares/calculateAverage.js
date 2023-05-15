@@ -20,6 +20,8 @@ exports.calculateAverageMiddleware = async (req, res, next) => {
     average = overall_weight / buildings_count
 
     const docRef = doc(db, 'status', latestDoc[0].id)
+
+    // patch to the doc released today 
     await updateDoc(docRef, {
         buildings_count : buildings_count,
         current_average : average,
