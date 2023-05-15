@@ -8,7 +8,6 @@ const wasteRef = collection(db, "waste");
 exports.calculateTotalMiddleware = async (req, res, next) => {
   const docRef = doc(db, "waste", req.params.id);
   const latestDoc = await CRUD.read(docRef);
-  const latestDoc_keys = Object.keys(latestDoc[0]);
   const request_key = Object.keys(req.body)[0];
 
   let totalWeight = req.body[request_key].weight.total;
