@@ -69,8 +69,26 @@ exports.WasteController = {
   patchWaste: async (req, res) => {
     try {
       const id = req.params.id;
+
+      const keys = Object.keys(req.body)
+      let building_name = ''
+      keys.forEach(key => {
+        if(key != 'overall_weight') {
+          building_name = key
+        }
+      }) 
       const docRef = doc(db, "waste", id);
-      const data = await CRUD.update(docRef, req.body);
+      const data = await CRUD.update(docRef, {
+        [building_name] : {
+          campus : req.body[building_name].campus,
+          weight : {
+            food_waste : req.body[building_name].weight.food_waste,
+            residual : req.body[building_name].weight.residual,
+            recyclable : req.body[building_name].weight.recyclable
+          }
+        },
+        overall_weight : req.body.overall_weight
+      });
       res.send(data);
     } catch (e) {
       res.status(500).send({ error: e.message });

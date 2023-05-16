@@ -12,7 +12,7 @@ const authRouter = require('./routes/authRouter');
 const reportsRouter = require('./routes/reportsRouter');
 const total_yearlyRouter = require('./routes/total_yearlyRouter')
 
-const PORT =  1234;
+const PORT =  2345;
 
 const app = express();
 
