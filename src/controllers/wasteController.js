@@ -84,7 +84,8 @@ exports.WasteController = {
           weight : {
             food_waste : req.body[building_name].weight.food_waste,
             residual : req.body[building_name].weight.residual,
-            recyclable : req.body[building_name].weight.recyclable
+            recyclable : req.body[building_name].weight.recyclable,
+            total : req.body[building_name].weight.total
           }
         },
         overall_weight : req.body.overall_weight
