@@ -10,7 +10,7 @@ const db = require("../firebase");
 const trashbinRef = collection(db, "trashbin");
 
 const Trashbin = require("../models/trashbin");
-const { CRUD } = require("../crud");
+const { CRUD } = require("../module/crud");
 
 exports.TrashbinController = {
   getAllTrashbin: async(req, res) => {

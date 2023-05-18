@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 
 const db = require("../firebase");
 const { addDoc, collection, serverTimestamp, doc, setDoc } = require('firebase/firestore');
-const { CRUD } = require('../crud');
+const { CRUD } = require("./crud");
 const { getLatest } = require('./getLatest');
 
 const wasteRef = collection(db, 'waste')

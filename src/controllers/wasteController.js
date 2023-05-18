@@ -12,7 +12,7 @@ const {
   getDoc,
 } = require("firebase/firestore");
 const db = require("../firebase");
-const { CRUD } = require("../crud");
+const { CRUD } = require("../module/crud");
 
 const wasteRef = collection(db, "waste");
 
@@ -44,7 +44,6 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
-  // backdoor testing API 
   postWaste: async (req, res) => {
     try {
       const data = await CRUD.create(wasteRef, {

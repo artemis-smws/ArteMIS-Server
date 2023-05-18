@@ -5,7 +5,7 @@ const {
   doc,
 } = require("firebase/firestore");
 const db = require("../firebase");
-const { CRUD } = require("../crud");
+const { CRUD } = require("./crud");
 
 // reference = collectionReference
 exports.getLatest = async (reference) => {

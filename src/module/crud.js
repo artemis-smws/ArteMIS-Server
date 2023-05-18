@@ -1,5 +1,5 @@
 const { getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc, setDoc } = require("firebase/firestore")
-const db = require("./firebase")
+const db = require("../firebase")
 
 exports.CRUD = {
     create : async(reference, passed_data) => {

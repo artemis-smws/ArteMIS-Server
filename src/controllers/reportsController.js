@@ -7,7 +7,7 @@ const {
   addDoc,
 } = require("firebase/firestore");
 const db = require("../firebase");
-const { CRUD } = require("../crud");
+const { CRUD } = require("../module/crud");
 
 const reportsRef = collection(db, "reports");
 
