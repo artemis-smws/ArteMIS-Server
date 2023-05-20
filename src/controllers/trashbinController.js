@@ -46,7 +46,12 @@ exports.TrashbinController = {
     try {
       const id = req.params.id;
       const docRef = doc(db, "trashbin", id);
-      const data = await CRUD.createSpecific(docRef, req.body)
+      const data = await CRUD.createSpecific(docRef, {
+        coordinates : req.body.location,
+        campus : req.body.campus,
+        school : req.body.school,
+        type : req.body.type 
+      })
       res.send(data)
     } catch(e) {
       res.status(500).send({ error: e.message });
