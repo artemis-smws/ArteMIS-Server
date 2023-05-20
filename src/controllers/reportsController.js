@@ -35,8 +35,7 @@ exports.ReportsController = {
       const data = await CRUD.create(reportsRef, {
         title: req.body.title,
         type: req.body.type,
-        image: req.body.image,
-        location: req.body.location,
+        building : req.body.building,
         description: req.body.description,
         submittedAt: serverTimestamp(),
       });
