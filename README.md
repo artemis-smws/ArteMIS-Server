@@ -2,7 +2,6 @@
 Server side back-end application for [ArteMIS Web](https://github.com/SchadenKai/ArteMIS-Waste-Management-System) and [ArteMIS Mobile](https://github.com/SchadenKai/ArteMIS-Mobile). The server framework heavily depends on Firebase, a backend-as-a-service (BaaS) together with Express, our backend server.
 
 ## Services used
-----
 - **Firebase function** : Serverless framework that is stored and run in Google cloud.
 - **Firestore** : Flexible, scalable NoSQL document database for all platforms. 
 - **Firebase Authentication** : used for authenticating users to the app at the same time supporting thirt-party authentication (Google)
@@ -10,12 +9,10 @@ Server side back-end application for [ArteMIS Web](https://github.com/SchadenKai
 - **Firebase Analytics** : keeping track of the activity and performance of the app (Mobile, Website, and Server).
 
 ## Technologies used
----
 - **Express** : back end web applicatio used to build ArteMIS APIs with RESTful architecture. 
 
 ## Getting Started
 ### Requirements
----
   - Firebase config file - this contains API key. Get this from firebase Artemis' project console. `(Console > Project Settings > ArteMIS Web)`
   - Firebase CLI : Open the terminal and type (You need to have NodeJS installed on your system)
  ```
@@ -23,23 +20,19 @@ Server side back-end application for [ArteMIS Web](https://github.com/SchadenKai
  ```
 
 ### Scripts
----
 - `npm run start` - starting development environment 
 - `npm run deploy` - deploy the source code as an API to the Firebase function for use 
 - `npm run server` - create a emulator environment for the source code for testing
 
 ## API Routes
 ### URL
----
 ```
 https://us-central1-artemis-b18ae.cloudfunctions.net/server
 ```
 ### Methods
----
 `POST` | `PUT` | `PATCH` | `GET` | `DELETE`
 
 ### Endpoints
----
 - `/waste` - Waste information coming from the Mobile users and processed to the admin dashboard
 - `/bin` - Contains data being gathered by ArteMIS IoT Trash bin through sensors. 
 - `/trashbin` - Information about each ArteMIS IoT Trahs bin. Used to register new trash bins to the system
@@ -48,7 +41,6 @@ https://us-central1-artemis-b18ae.cloudfunctions.net/server
 - `/status` - contains summary reports from data collected and processed from Mobile 
 
 ### Data Request Schema 
----
 - `/waste/:id` (PATCH / PUT) - the id will be coming from the latest doc in the collection. Get this from `/waste/latest`
   ```
     {
