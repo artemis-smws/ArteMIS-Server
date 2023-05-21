@@ -11,8 +11,9 @@ const trashbinRouter = require('./routes/trashbinRouter')
 const authRouter = require('./routes/authRouter');
 const reportsRouter = require('./routes/reportsRouter');
 const statusRouter = require('./routes/statusRouter')
+const buildingRouter = require('./routes/buildingRouter')
 
-const PORT =  2345;
+const PORT =  1234;
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/waste', wasteRouter)
 app.use('/trashbin', trashbinRouter)
 app.use('/auth', authRouter)
 app.use('/reports', reportsRouter)
+app.use('/building', buildingRouter)
 
 //scheduled functions
 const {wasteSchedPost, yearlyWasteSchedPost, statusSchedPostDaily} = require('./module/scheduledExecution')
