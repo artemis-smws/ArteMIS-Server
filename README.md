@@ -7,6 +7,7 @@ Server side back-end application for [ArteMIS Web](https://github.com/SchadenKai
 - **Firebase Authentication** : used for authenticating users to the app at the same time supporting thirt-party authentication (Google)
 - **Firebase Hosting** : used to deploy and host the front-end website on the internet.
 - **Firebase Analytics** : keeping track of the activity and performance of the app (Mobile, Website, and Server).
+- **Cloud Scheduler** : Set scheduled execution of Firebase function
 
 ## Technologies used
 - **Express** : back end web applicatio used to build ArteMIS APIs with RESTful architecture. 
