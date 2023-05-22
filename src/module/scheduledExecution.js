@@ -17,6 +17,7 @@ const statusRef = collection(db, "status");
 const monthlyRef = collection(db, "monthly");
 const buildingRef = collection(db, "building");
 
+// put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
   .schedule("5 0 * * *")
   .onRun(async (context) => {
@@ -59,6 +60,7 @@ exports.wasteSchedPost = functions.pubsub
     return null;
   });
 
+// put predefined doc field for the current month
 exports.monthlyStatusSchedPost = functions.pubsub
   .schedule("0 0 1 */1 *")
   .onRun((context) => {
@@ -82,6 +84,7 @@ exports.monthlyStatusSchedPost = functions.pubsub
     setDoc(monthlyRef, data, docID);
   });
 
+  
 exports.statusSchedPostDaily = functions.pubsub
   .schedule("0 0 * * *")
   .onRun(async (context) => {
@@ -100,7 +103,7 @@ exports.statusSchedPostDaily = functions.pubsub
       overall_weight: prev_weight,
       createdAt: serverTimestamp(),
     };
-    setDoc(statusRef, data, docID);
+    setDoc(doc(db, 'status', docID), data);
   });
 
 exports.yearlyWasteSchedPost = functions.pubsub
