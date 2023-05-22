@@ -62,7 +62,7 @@ exports.wasteSchedPost = functions.pubsub
 
 // put predefined doc field for the current month
 exports.monthlyStatusSchedPost = functions.pubsub
-  .schedule("0 0 1 */1 *")
+  .schedule("0 0 * * *")
   .onRun((context) => {
     const today = new Date();
     const monthNow = today.getMonth() + 1;
@@ -81,7 +81,7 @@ exports.monthlyStatusSchedPost = functions.pubsub
         },
       },
     };
-    setDoc(monthlyRef, data, docID);
+    setDoc(doc(db, 'monthly', docID), data);
   });
 
   
