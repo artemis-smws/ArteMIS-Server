@@ -34,9 +34,10 @@ app.use('/reports', reportsRouter)
 app.use('/building', buildingRouter)
 
 //scheduled functions
-const {wasteSchedPost, yearlyWasteSchedPost, statusSchedPostDaily} = require('./module/scheduledExecution')
+const {wasteSchedPost, yearlyWasteSchedPost, statusSchedPostDaily, monthlyStatusSchedPost} = require('./module/scheduledExecution')
 exports.wasteSchedPost = wasteSchedPost;
 exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
+exports.monthlyStatusSchedPost = monthlyStatusSchedPost
 exports.statusSchedPostDaily = statusSchedPostDaily;
 
 app.listen(PORT, () => {
