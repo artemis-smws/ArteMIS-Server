@@ -46,7 +46,8 @@ exports.wasteSchedPost = functions.pubsub
             weight : {
                 food_waste : 0,
                 recyclable : 0,
-                residual : 0
+                residual : 0,
+                total : 0
             }
         }})
       })
