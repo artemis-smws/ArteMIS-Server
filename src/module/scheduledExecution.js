@@ -16,6 +16,7 @@ const yearlyRef = collection(db, "yearly");
 const statusRef = collection(db, "status");
 const monthlyRef = collection(db, "monthly");
 const buildingRef = collection(db, "building");
+const weeklyRef = collection(db, 'weekly')
 
 // put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
@@ -82,8 +83,11 @@ exports.monthlyStatusSchedPost = functions.pubsub
     await setDoc(doc(db, "monthly", docID), data);
   });
 
+// create pre-formatted docs for status 
+// status contains overall info for the day 
+// update this through the middleware 
 exports.statusSchedPostDaily = functions.pubsub
-  .schedule("0 0 * * *")
+  .schedule("1 0 * * *")
   .onRun(async (context) => {
     const today = new Date();
     const day = today.getDate();
@@ -91,13 +95,15 @@ exports.statusSchedPostDaily = functions.pubsub
     const year = today.getFullYear();
     const docID = `${month}-${day}-${year % 100}`;
 
-    const previousDoc = await getLatest(statusRef);
-    const prev_average = previousDoc[0].current_average;
-    const prev_weight = previousDoc[0].overall_weight;
     const data = {
       buildings_count: 0,
-      current_average: prev_average,
-      overall_weight: prev_weight,
+      current_average: 0,
+      overall_weight: 0,
+      types : {
+        food_waste : 0,
+        residual : 0,
+        recyclable : 0
+      },
       createdAt: serverTimestamp(),
     };
     await setDoc(doc(db, "status", docID), data);
@@ -122,3 +128,23 @@ exports.yearlyWasteSchedPost = functions.pubsub
     setDoc(yearlyRef, data, yearNow);
     return null;
   });
+
+exports.weeklyWasteSchedPost = functions.pubsub.schedule("0 0 * * *").onRun((context) => {
+  const date = new Date() 
+  const day_name = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
+  const doc_id = day_name[date.getDay()]
+  
+  const data = {
+    total_weight : 0,
+    total_building : 0,
+    average_weight : 0,
+    types : {
+      total_residual : 0,
+      total_recyclable : 0,
+      total_food_waste : 0
+    }
+  }
+  setDoc(weeklyRef, data, doc_id)
+  return null
+})
+
