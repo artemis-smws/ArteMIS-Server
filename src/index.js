@@ -57,13 +57,14 @@ app.use('/building', buildingRouter)
 
 
 //scheduled functions
-const {wasteSchedPost, yearlyWasteSchedPost, statusSchedPostDaily, monthlyStatusSchedPost} = require('./module/scheduledExecution');
+const {wasteSchedPost, yearlyWasteSchedPost, statusSchedPostDaily, monthlyStatusSchedPost, weeklyWasteSchedPost} = require('./module/scheduledExecution');
 
 
 exports.wasteSchedPost = wasteSchedPost;
 exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
 exports.monthlyStatusSchedPost = monthlyStatusSchedPost
 exports.statusSchedPostDaily = statusSchedPostDaily;
+exports.weeklyStatusSchedPost = weeklyWasteSchedPost;
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
