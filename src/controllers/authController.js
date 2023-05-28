@@ -34,7 +34,7 @@ exports.AuthController = {
       });
   },
   forgetPassword: (req, res) => {
-    if (!res.body.email) {
+    if (!req.body.email) {
       res.status(400).send({ error: "Email is required" });
     }
     sendPasswordResetEmail(auth, req.body.email)
