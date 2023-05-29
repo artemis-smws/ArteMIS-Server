@@ -4,28 +4,39 @@ const { CRUD } = require("../module/crud")
 const { getLatest } = require("../module/getLatest")
 
 const statusRef = collection(db, 'status')
+const wasteRef = collection(db, 'waste')
 
+// update the data within status collection
 exports.calculateAverageMiddleware = async (req, res, next) => {
-    const latestDoc = await getLatest(statusRef)
-    const requestKey = Object.keys(req.body)
+    const latestDoc = await getLatest(wasteRef)[0]
+    const latestStatus = await getLatest(statusRef)[0]
+    const latestStatusId = latestStatus.id
+    const keys = Object.keys(latestDoc)
+    const overall_weight = req.body.overall_weight + latestDoc.overall_weight
+    const building_list = []
+    let buildings_count = 0
+    
+    keys.forEach(key => {
+        if(!(key == 'overall_weight' || key == 'createdAt' || key == 'id' )){
+            building_list.push(key)
+        }
+    })
+    
+    building_list.forEach(building => {
+        if(latestDoc[building].weight.total != 0){
+            buildings_count++;
+        }
+    })
 
-    const current_avg = latestDoc[0].current_average
-    let buildings_count = latestDoc[0].buildings_count
-    const req_total = req.body[requestKey[0]].weight.total
+    const average = overall_weight / buildings_count
 
-    let average = current_avg * buildings_count
-
-    const overall_weight = req_total + average
-    buildings_count++
-    average = overall_weight / buildings_count
-
-    const docRef = doc(db, 'status', latestDoc[0].id)
+    const docRef = doc(db, 'status', latestStatusId)
 
     // patch to the doc released today 
     await updateDoc(docRef, {
         buildings_count : buildings_count,
         current_average : average,
-        createdAt : serverTimestamp(),
+        createdAt : serverTimestamp(),  
         overall_weight : overall_weight
     })
     next()

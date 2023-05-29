@@ -20,6 +20,14 @@ exports.statusController = {
       res.send({ error: e.message });
     }
   },
+  getLatestStatus: async (req, res) => {
+    try {
+      const data = await getLatest(statusRef)
+      res.send(data)
+    } catch (e) {
+      res.send({error : e.message})
+    }
+  },
   getAllYearly: async (req, res) => {
     try {
       const data = await CRUD.readAll(yearlyRef)

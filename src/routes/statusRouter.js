@@ -6,6 +6,8 @@ router.route('/')
     .get(statusController.getAllStatus)
     .post(statusController.postData)
 
+router.get('/latest', statusController.getLatestStatus)
+
 router.get('/yearly', statusController.getAllYearly)
 
 router.get('/monthly', statusController.getAllMonthly)
