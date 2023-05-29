@@ -14,7 +14,7 @@ const statusRouter = require('./routes/statusRouter')
 const buildingRouter = require('./routes/buildingRouter')
 
 
-const PORT =  1234;
+const PORT =  3456;
 
 const app = express();
 
