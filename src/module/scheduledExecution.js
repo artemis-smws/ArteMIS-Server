@@ -8,6 +8,8 @@ const {
   doc,
   setDoc,
   query,
+  orderBy,
+  limit,
 } = require("firebase/firestore");
 const { CRUD } = require("./crud");
 const { getLatest, getLast7Days } = require("./getLatest");
@@ -66,20 +68,46 @@ exports.wasteSchedPost = functions.pubsub
 
 // put predefined doc field for the current month
 exports.monthlyStatusSchedPost = functions.pubsub
-  .schedule("0 0 * * *")
+  .schedule("0 0 * */1 *")
   .onRun(async (context) => {
-    const docID = new Date().toUTCString().slice(8, 16);
+    const date = new Date()
+    const month = date.getMonth() 
+    const year = date.getFullYear()
+    const month_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October','November', 'December']
+    const docID = `${month_list[month]}-${year}`
+    const monthDaysWith31Days = ["January", "March", "May", "July", "August", "October", "December"]
+    let days = 30 
+    monthDaysWith31Days.forEach(month => {
+      if(month == month_list[month]) {
+        days = 31
+      }
+    })
+
+    const buildingDocs = await CRUD.readAll(buildingRef)
+    const building_list = new Set()
+    buildingDocs.forEach(doc => {
+      const keys = Object.keys(doc)
+      keys.forEach(key => {
+        if(key != "id") {
+          building_list.add(key)
+        }
+      })
+    })
+    const building_count = building_list.size
+
+    const q = query(monthlyRef, orderBy("createdAt", "desc"), limit(days))
+    const docs = await CRUD.readAll(q)
+    let total_weight = 0
+    docs.forEach(doc => {
+      total_weight += doc.overall_weight
+    })
+    const average = total_weight / days 
+
     const data = {
-      buildings_count: 0,
-      weight: 0,
-      average: 0,
+      registered_buildings: building_count,
+      weight: total_weight,
+      average: average,
       createdAt: serverTimestamp(),
-      campus: {
-        Alangilan: {
-          CICS: 0,
-          CEAFA: 0,
-        },
-      },
     };
     await setDoc(doc(db, "monthly", docID), data);
   });
@@ -110,6 +138,7 @@ exports.statusSchedPostDaily = functions.pubsub
     await setDoc(doc(db, "status", docID), data);
   });
 
+  // under construction
 exports.yearlyWasteSchedPost = functions.pubsub
   .schedule("0 0 1 1 *")
   .onRun(async (context) => {
@@ -142,6 +171,7 @@ exports.weeklyWasteSchedPost = functions.pubsub
     let total_recyclable = 0;
 
     const building_set = new Set()
+
     // get building and building count 
     docs.forEach(doc => {
       const keys = Object.keys(doc)
@@ -152,19 +182,18 @@ exports.weeklyWasteSchedPost = functions.pubsub
           local_building.push(key)
         }
       })  
-      // get types 
+      // get types  
       local_building.forEach(building => {
         total_recyclable += doc[building].weight.recyclable
         total_residual += doc[building].weight.residual
         total_food_waste += doc[building].weight.food_waste
-      })
+      })  
       // get overall_weight
       total_weekly_weight += doc.overall_weight
     })
     building_count = building_set.size
     weekly_average = total_weekly_weight / building_count
     
-
     const data = {
       total_weight: total_weekly_weight,
       total_building: building_count,
