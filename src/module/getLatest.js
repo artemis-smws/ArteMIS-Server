@@ -18,6 +18,27 @@ exports.getLatest = async (reference) => {
   return latest_doc;
 };
 
+exports.getLast7Days = async (reference) => {
+  const q = query(
+    reference,
+    orderBy("createdAt", "desc"),
+    limit(7)
+  )
+  const fetchedDocs = await CRUD.readAll(q)
+  return fetchedDocs
+}
+
+exports.getLast30Days = async (reference) => {
+  const q = query(
+    reference,
+    orderBy("createdAt", "desc"),
+    limit(30)
+  )
+  const fetchedDocs = await CRUD.readAll(q)
+  return fetchedDocs
+}
+
+
 // reference = collectionReference
 exports.getBuildingCount = async (id) => {
   const docRef = doc(db, "waste", id);

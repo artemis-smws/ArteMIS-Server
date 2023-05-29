@@ -34,6 +34,24 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
+  getLast7Days : async (req, res) => {
+    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7))
+    try {
+      const docs = await CRUD.readAll(q)
+      res.send(docs)
+    } catch (e) {
+      res.status(500).send({error : e.message})
+    }
+  },
+  getLast30Days : async (req, res) => {
+    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7))
+    try {
+      const docs = await CRUD.readAll(q)
+      res.send(docs)
+    } catch (e) {
+      res.status(500).send({error : e.message})
+    }
+  },
   getWaste: async (req, res) => {
     try {
       const id = req.params.id;
