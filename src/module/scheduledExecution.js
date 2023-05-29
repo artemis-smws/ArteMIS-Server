@@ -7,15 +7,17 @@ const {
   serverTimestamp,
   doc,
   setDoc,
+  query,
 } = require("firebase/firestore");
 const { CRUD } = require("./crud");
-const { getLatest } = require("./getLatest");
+const { getLatest, getLast7Days } = require("./getLatest");
 
 const wasteRef = collection(db, "waste");
 const yearlyRef = collection(db, "yearly");
 const statusRef = collection(db, "status");
 const monthlyRef = collection(db, "monthly");
 const buildingRef = collection(db, "building");
+const weeklyRef = collection(db, "weekly");
 
 // put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
@@ -82,8 +84,11 @@ exports.monthlyStatusSchedPost = functions.pubsub
     await setDoc(doc(db, "monthly", docID), data);
   });
 
+// create pre-formatted docs for status
+// status contains overall info for the day
+// update this through the middleware
 exports.statusSchedPostDaily = functions.pubsub
-  .schedule("0 0 * * *")
+  .schedule("1 0 * * *")
   .onRun(async (context) => {
     const today = new Date();
     const day = today.getDate();
@@ -91,13 +96,15 @@ exports.statusSchedPostDaily = functions.pubsub
     const year = today.getFullYear();
     const docID = `${month}-${day}-${year % 100}`;
 
-    const previousDoc = await getLatest(statusRef);
-    const prev_average = previousDoc[0].current_average;
-    const prev_weight = previousDoc[0].overall_weight;
     const data = {
       buildings_count: 0,
-      current_average: prev_average,
-      overall_weight: prev_weight,
+      current_average: 0,
+      overall_weight: 0,
+      types: {
+        food_waste: 0,
+        residual: 0,
+        recyclable: 0,
+      },
       createdAt: serverTimestamp(),
     };
     await setDoc(doc(db, "status", docID), data);
@@ -105,7 +112,7 @@ exports.statusSchedPostDaily = functions.pubsub
 
 exports.yearlyWasteSchedPost = functions.pubsub
   .schedule("0 0 1 1 *")
-  .onRun((context) => {
+  .onRun(async (context) => {
     const yearNow = new Date().getFullYear();
     const data = {
       buildings_count: 0,
@@ -119,6 +126,55 @@ exports.yearlyWasteSchedPost = functions.pubsub
         },
       },
     };
-    setDoc(yearlyRef, data, yearNow);
+    await setDoc(doc(db, "yearly", yearNow), data);
+    return null;
+  });
+
+exports.weeklyWasteSchedPost = functions.pubsub
+  .schedule("0 0 * * */7")
+  .onRun(async (context) => {
+    const docs = await getLast7Days(wasteRef)
+    let building_count = 0;
+    let total_weekly_weight = 0;
+    let weekly_average = 0;
+    let total_food_waste = 0;
+    let total_residual = 0;
+    let total_recyclable = 0;
+
+    const building_set = new Set()
+    // get building and building count 
+    docs.forEach(doc => {
+      const keys = Object.keys(doc)
+      const local_building = []
+      keys.forEach(key => {
+        if(!(key == "createdAt" || key == "id" || key == "overall_weight")) {
+          building_set.add(key)
+          local_building.push(key)
+        }
+      })  
+      // get types 
+      local_building.forEach(building => {
+        total_recyclable += doc[building].weight.recyclable
+        total_residual += doc[building].weight.residual
+        total_food_waste += doc[building].weight.food_waste
+      })
+      // get overall_weight
+      total_weekly_weight += doc.overall_weight
+    })
+    building_count = building_set.size
+    weekly_average = total_weekly_weight / building_count
+    
+
+    const data = {
+      total_weight: total_weekly_weight,
+      total_building: building_count,
+      average_weight: weekly_average,
+      types: {
+        total_residual: total_residual,
+        total_recyclable: total_recyclable,
+        total_food_waste: total_food_waste,
+      },
+    };
+    await addDoc(weeklyRef, data);
     return null;
   });
