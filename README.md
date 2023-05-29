@@ -40,6 +40,7 @@ https://us-central1-artemis-b18ae.cloudfunctions.net/server
 - `/auth` - used to authenticated the users 
 - `/reports` - contains reports information to be passed on the admin and facility staffs. 
 - `/status` - contains summary reports from data collected and processed from Mobile 
+- `/building` - list of campus and building within each campus. Each building contains coordinates of its location. 
 
 ### Data Request Schema 
 - `/waste/:id` (PATCH / PUT) - the id will be coming from the latest doc in the collection. Get this from `/waste/latest`
@@ -79,5 +80,13 @@ https://us-central1-artemis-b18ae.cloudfunctions.net/server
     "campus" : <campus_name (string)>,
     "location" : <latitude and longitude values (geolocation)>
     "description" : <textarea_values (string)>
+}
+```
+- `/building` (PUT)
+```
+{
+    "building_name" : <building name (string)>
+    "latitude" : <(numbers)>,
+    "longitude" : <(numbers)>
 }
 ```
