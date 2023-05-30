@@ -8,11 +8,11 @@ const wasteRef = collection(db, 'waste')
 
 // update the data within status collection
 exports.calculateAverageMiddleware = async (req, res, next) => {
-    const latestDoc = await getLatest(wasteRef)[0]
-    const latestStatus = await getLatest(statusRef)[0]
-    const latestStatusId = latestStatus.id
-    const keys = Object.keys(latestDoc)
-    const overall_weight = req.body.overall_weight + latestDoc.overall_weight
+    const latestDoc = await getLatest(wasteRef)
+    const latestStatus = await getLatest(statusRef)
+    const latestStatusId = latestStatus[0].id
+    const keys = Object.keys(latestDoc[0])
+    const overall_weight = req.body.overall_weight + latestDoc[0].overall_weight
     const building_list = []
     let buildings_count = 0
     
@@ -23,7 +23,7 @@ exports.calculateAverageMiddleware = async (req, res, next) => {
     })
     
     building_list.forEach(building => {
-        if(latestDoc[building].weight.total != 0){
+        if(latestDoc[0][building].weight.total != 0){
             buildings_count++;
         }
     })

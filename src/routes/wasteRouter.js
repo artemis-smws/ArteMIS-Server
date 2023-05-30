@@ -15,6 +15,8 @@ router.route('/')
     // testing route - delete at deployment
     .post(WasteController.postWaste)
    
+router.get('/highest', WasteController.getHighest)
+router.get('/lowest', WasteController.getLowest)
 router.get('/latest', WasteController.getLatest)
 router.get('/latest/7days', WasteController.getLast7Days)
 router.get('/latest/30days', WasteController.getLast30Days)

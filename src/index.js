@@ -13,7 +13,7 @@ const reportsRouter = require("./routes/reportsRouter");
 const statusRouter = require("./routes/statusRouter");
 const buildingRouter = require("./routes/buildingRouter");
 
-const PORT = 1412;
+const PORT = 1231;
 
 const app = express();
 

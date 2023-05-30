@@ -62,6 +62,24 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
+  getHighest: async (req, res) => {
+    try {
+      const q = query(wasteRef, orderBy("overall_weight", "desc"), limit(1));
+      const data = await CRUD.readAll(q);
+      res.send(data);
+    } catch(e) {
+      res.status(500).send({error : e.message})
+    }
+  },
+  getLowest: async (req, res) => {
+    try {
+      const q = query(wasteRef, orderBy("overall_weight", "asc"), limit(1));
+      const data = await CRUD.readAll(q);
+      res.send(data);
+    } catch (e) {
+      res.status(500).send({error : e.message})
+    }
+  },
   postWaste: async (req, res) => {
     try {
       const data = await CRUD.create(wasteRef, {
