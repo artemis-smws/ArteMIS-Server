@@ -24,6 +24,7 @@ const weeklyRef = collection(db, "weekly");
 // put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
   .schedule("5 0 * * *")
+  .timeZone("Asia/Manila")
   .onRun(async (context) => {
     let data = {
       overall_weight: 0,
@@ -69,39 +70,62 @@ exports.wasteSchedPost = functions.pubsub
 // put predefined doc field for the current month
 exports.monthlyStatusSchedPost = functions.pubsub
   .schedule("0 0 * */1 *")
+  .timeZone("Asia/Manila")
   .onRun(async (context) => {
-    const date = new Date()
-    const month = date.getMonth() 
-    const year = date.getFullYear()
-    const month_list = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October','November', 'December']
-    const docID = `${month_list[month]}-${year}`
-    const monthDaysWith31Days = ["January", "March", "May", "July", "August", "October", "December"]
-    let days = 30 
-    monthDaysWith31Days.forEach(month => {
-      if(month == month_list[month]) {
-        days = 31
+    const date = new Date();
+    const month = date.getMonth();
+    const year = date.getFullYear();
+    const month_list = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const docID = `${month_list[month]}-${year}`;
+    const monthDaysWith31Days = [
+      "January",
+      "March",
+      "May",
+      "July",
+      "August",
+      "October",
+      "December",
+    ];
+    let days = 30;
+    monthDaysWith31Days.forEach((raw_month) => {
+      if (raw_month == month_list[month]) {
+        days = 31;
       }
-    })
-
-    const buildingDocs = await CRUD.readAll(buildingRef)
-    const building_list = new Set()
-    buildingDocs.forEach(doc => {
-      const keys = Object.keys(doc)
-      keys.forEach(key => {
-        if(key != "id") {
-          building_list.add(key)
+    });
+    console.log(days);
+    // calculate building count
+    const buildingDocs = await CRUD.readAll(buildingRef);
+    const building_list = new Set();
+    buildingDocs.forEach((doc) => {
+      const keys = Object.keys(doc);
+      keys.forEach((key) => {
+        if (key != "id") {
+          building_list.add(key);
         }
-      })
-    })
-    const building_count = building_list.size
+      });
+    });
+    const building_count = building_list.size;
 
-    const q = query(monthlyRef, orderBy("createdAt", "desc"), limit(days))
-    const docs = await CRUD.readAll(q)
-    let total_weight = 0
-    docs.forEach(doc => {
-      total_weight += doc.overall_weight
-    })
-    const average = total_weight / days 
+    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(days));
+    const docs = await CRUD.readAll(q);
+    let total_weight = 0;
+    docs.forEach((doc) => {
+      total_weight += doc.overall_weight;
+    });
+    const average = total_weight / days;
 
     const data = {
       registered_buildings: building_count,
@@ -109,7 +133,8 @@ exports.monthlyStatusSchedPost = functions.pubsub
       average: average,
       createdAt: serverTimestamp(),
     };
-    await setDoc(doc(db, "monthly", docID), data);
+    const returnData = await setDoc(doc(db, "monthly", docID), data);
+    res.send(returnData);
   });
 
 // create pre-formatted docs for status
@@ -117,6 +142,7 @@ exports.monthlyStatusSchedPost = functions.pubsub
 // update this through the middleware
 exports.statusSchedPostDaily = functions.pubsub
   .schedule("1 0 * * *")
+  .timeZone("Asia/Manila")
   .onRun(async (context) => {
     const today = new Date();
     const day = today.getDate();
@@ -138,9 +164,10 @@ exports.statusSchedPostDaily = functions.pubsub
     await setDoc(doc(db, "status", docID), data);
   });
 
-  // under construction
+// under construction
 exports.yearlyWasteSchedPost = functions.pubsub
   .schedule("0 0 1 1 *")
+  .timeZone("Asia/Manila")
   .onRun(async (context) => {
     const yearNow = new Date().getFullYear();
     const data = {
@@ -161,8 +188,9 @@ exports.yearlyWasteSchedPost = functions.pubsub
 
 exports.weeklyWasteSchedPost = functions.pubsub
   .schedule("0 0 * * */7")
+  .timeZone("Asia/Manila")
   .onRun(async (context) => {
-    const docs = await getLast7Days(wasteRef)
+    const docs = await getLast7Days(wasteRef);
     let building_count = 0;
     let total_weekly_weight = 0;
     let weekly_average = 0;
@@ -170,30 +198,30 @@ exports.weeklyWasteSchedPost = functions.pubsub
     let total_residual = 0;
     let total_recyclable = 0;
 
-    const building_set = new Set()
+    const building_set = new Set();
 
-    // get building and building count 
-    docs.forEach(doc => {
-      const keys = Object.keys(doc)
-      const local_building = []
-      keys.forEach(key => {
-        if(!(key == "createdAt" || key == "id" || key == "overall_weight")) {
-          building_set.add(key)
-          local_building.push(key)
+    // get building and building count
+    docs.forEach((doc) => {
+      const keys = Object.keys(doc);
+      const local_building = [];
+      keys.forEach((key) => {
+        if (!(key == "createdAt" || key == "id" || key == "overall_weight")) {
+          building_set.add(key);
+          local_building.push(key);
         }
-      })  
-      // get types  
-      local_building.forEach(building => {
-        total_recyclable += doc[building].weight.recyclable
-        total_residual += doc[building].weight.residual
-        total_food_waste += doc[building].weight.food_waste
-      })  
+      });
+      // get types
+      local_building.forEach((building) => {
+        total_recyclable += doc[building].weight.recyclable;
+        total_residual += doc[building].weight.residual;
+        total_food_waste += doc[building].weight.food_waste;
+      });
       // get overall_weight
-      total_weekly_weight += doc.overall_weight
-    })
-    building_count = building_set.size
-    weekly_average = total_weekly_weight / building_count
-    
+      total_weekly_weight += doc.overall_weight;
+    });
+    building_count = building_set.size;
+    weekly_average = total_weekly_weight / building_count;
+
     const data = {
       total_weight: total_weekly_weight,
       total_building: building_count,
