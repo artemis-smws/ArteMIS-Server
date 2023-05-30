@@ -154,15 +154,11 @@ exports.statusSchedPostDaily = functions.pubsub
 
     const data = {
       buildings_count: 0,
-      current_average: 0,
+      average_per_building: 0,
       overall_weight: 0,
-      types: {
-        food_waste: 0,
-        residual: 0,
-        recyclable: {
-          total : 0
-        },
-      },
+      overall_food_waste_weight: 0,
+      overall_recyclable_weight: 0,
+      overall_residual_weight: 0,
       createdAt: serverTimestamp(),
     };
     await setDoc(doc(db, "status", docID), data);

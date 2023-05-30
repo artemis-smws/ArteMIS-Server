@@ -34,22 +34,22 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
-  getLast7Days : async (req, res) => {
-    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7))
+  getLast7Days: async (req, res) => {
+    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7));
     try {
-      const docs = await CRUD.readAll(q)
-      res.send(docs)
+      const docs = await CRUD.readAll(q);
+      res.send(docs);
     } catch (e) {
-      res.status(500).send({error : e.message})
+      res.status(500).send({ error: e.message });
     }
   },
-  getLast30Days : async (req, res) => {
-    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7))
+  getLast30Days: async (req, res) => {
+    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7));
     try {
-      const docs = await CRUD.readAll(q)
-      res.send(docs)
+      const docs = await CRUD.readAll(q);
+      res.send(docs);
     } catch (e) {
-      res.status(500).send({error : e.message})
+      res.status(500).send({ error: e.message });
     }
   },
   getWaste: async (req, res) => {
@@ -67,8 +67,8 @@ exports.WasteController = {
       const q = query(wasteRef, orderBy("overall_weight", "desc"), limit(1));
       const data = await CRUD.readAll(q);
       res.send(data);
-    } catch(e) {
-      res.status(500).send({error : e.message})
+    } catch (e) {
+      res.status(500).send({ error: e.message });
     }
   },
   getLowest: async (req, res) => {
@@ -77,13 +77,14 @@ exports.WasteController = {
       const data = await CRUD.readAll(q);
       res.send(data);
     } catch (e) {
-      res.status(500).send({error : e.message})
+      res.status(500).send({ error: e.message });
     }
   },
   postWaste: async (req, res) => {
     try {
       const data = await CRUD.create(wasteRef, {
-        ...req.body, createdAt : serverTimestamp()
+        ...req.body,
+        createdAt: serverTimestamp(),
       });
       res.send(data);
     } catch (e) {
@@ -100,30 +101,35 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
-  // only access for the users 
+  // only access for the users
   patchWaste: async (req, res) => {
     try {
       const id = req.params.id;
-
-      const keys = Object.keys(req.body)
-      let building_name = ''
-      keys.forEach(key => {
-        if(key != 'overall_weight') {
-          building_name = key
+      const keys = Object.keys(req.body);
+      let building_name = "";
+      keys.forEach((key) => {
+        if (
+          key != "overall_weight" &&
+          key != "overall_food_waste" &&
+          key != "overall_recyclable" &&
+          key != "overall_residual"
+        ) {
+          building_name = key;
         }
-      }) 
+      });
       const docRef = doc(db, "waste", id);
+      // update current waste document
       const data = await CRUD.update(docRef, {
-        [building_name] : {
-          campus : req.body[building_name].campus,
-          weight : {
-            food_waste : req.body[building_name].weight.food_waste,
-            residual : req.body[building_name].weight.residual,
-            recyclable : req.body[building_name].weight.recyclable,
-            total : req.body[building_name].weight.total
-          }
+        [building_name]: {
+          campus: req.body[building_name].campus,
+          weight: {
+            food_waste: req.body[building_name].weight.food_waste,
+            residual: req.body[building_name].weight.residual,
+            recyclable: req.body[building_name].weight.recyclable,
+            total: req.body[building_name].weight.total,
+          },
         },
-        overall_weight : req.body.overall_weight
+        overall_weight: req.body.overall_weight,
       });
       res.send(data);
     } catch (e) {
