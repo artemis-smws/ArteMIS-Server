@@ -13,8 +13,7 @@ const reportsRouter = require('./routes/reportsRouter');
 const statusRouter = require('./routes/statusRouter')
 const buildingRouter = require('./routes/buildingRouter')
 
-
-const PORT =  3456;
+const PORT =  3453;
 
 const app = express();
 

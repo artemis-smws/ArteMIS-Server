@@ -15,7 +15,7 @@ exports.AuthController = {
     }
     createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
       .then((cred) => {
-        res.send(cred.user);
+        res.send(cred);
       })
       .catch((e) => {
         res.status(500).send({ error: e.message });
@@ -27,7 +27,7 @@ exports.AuthController = {
     }
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
       .then((cred) => {
-        res.send(cred.user);
+        res.send(cred);
       })
       .catch((e) => {
         res.status(500).send({ error: e.message });
