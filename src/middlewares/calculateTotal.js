@@ -27,9 +27,7 @@ exports.calculateTotalMiddleware = async (req, res, next) => {
   // add all types of waste per building
   building_list.forEach((building) => {
     total_food_waste += latestDoc[0][building].weight.food_waste || 0;
-    total_recyclable += latestDoc[0][building].weight.recyclable.total
-      ? latestDoc[0][building].weight.recyclable.total
-      : latestDoc[0][building].weight.recyclable;
+    total_recyclable += latestDoc[0][building].weight.recyclable.total || 0;
     total_residual += latestDoc[0][building].weight.residual || 0;
     total_weight += latestDoc[0][building].weight.total || 0;
   });
