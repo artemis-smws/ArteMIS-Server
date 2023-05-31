@@ -1,0 +1,15 @@
+[debug] [2023-05-30T12:59:29.721Z] ----------------------------------------------------------------------
+[debug] [2023-05-30T12:59:29.724Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\kairu\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2023-05-30T12:59:29.724Z] CLI Version:   11.28.0
+[debug] [2023-05-30T12:59:29.724Z] Platform:      win32
+[debug] [2023-05-30T12:59:29.724Z] Node Version:  v16.17.1
+[debug] [2023-05-30T12:59:29.725Z] Time:          Tue May 30 2023 20:59:29 GMT+0800 (Singapore Standard Time)
+[debug] [2023-05-30T12:59:29.725Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-05-30T12:59:29.729Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2023-05-30T12:59:29.825Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-05-30T12:59:29.825Z] > authorizing via signed-in user (artemis.batstateu@gmail.com)
+[debug] [2023-05-30T12:59:29.825Z] [iam] checking project artemis-b18ae for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-05-30T12:59:29.826Z] > refreshing access token with scopes: []
+[debug] [2023-05-30T12:59:29.827Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2023-05-30T12:59:29.827Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]

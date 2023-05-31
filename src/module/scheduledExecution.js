@@ -53,7 +53,9 @@ exports.wasteSchedPost = functions.pubsub
             campus: campus_name,
             weight: {
               food_waste: 0,
-              recyclable: 0,
+              recyclable: {
+                total: 0,
+              },
               residual: 0,
               total: 0,
             },
@@ -152,13 +154,11 @@ exports.statusSchedPostDaily = functions.pubsub
 
     const data = {
       buildings_count: 0,
-      current_average: 0,
+      average_per_building: 0,
       overall_weight: 0,
-      types: {
-        food_waste: 0,
-        residual: 0,
-        recyclable: 0,
-      },
+      overall_food_waste_weight: 0,
+      overall_recyclable_weight: 0,
+      overall_residual_weight: 0,
       createdAt: serverTimestamp(),
     };
     await setDoc(doc(db, "status", docID), data);
@@ -212,7 +212,7 @@ exports.weeklyWasteSchedPost = functions.pubsub
       });
       // get types
       local_building.forEach((building) => {
-        total_recyclable += doc[building].weight.recyclable;
+        total_recyclable += doc[building].weight.recyclable.total;
         total_residual += doc[building].weight.residual;
         total_food_waste += doc[building].weight.food_waste;
       });
