@@ -4,6 +4,7 @@ const { collection } = require('firebase/firestore')
 const db = require('../firebase')
 const { calculateTotalMiddleware } = require('../middlewares/calculateTotal')
 const { calculateAverageMiddleware } = require('../middlewares/calculateAverage')
+const { calculateMonthlyMiddleware } = require('../middlewares/calculateMonthly')
 const router = express.Router()
 
 const wasteRef = collection(db, 'waste')
@@ -24,7 +25,7 @@ router.get('/latest/30days', WasteController.getLast30Days)
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
-    .patch(calculateTotalMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
-    .put(calculateTotalMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
+    .patch(calculateTotalMiddleware, calculateMonthlyMiddleware ,calculateAverageMiddleware, WasteController.patchWaste)
+    .put(calculateTotalMiddleware, calculateMonthlyMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
 
 module.exports = router

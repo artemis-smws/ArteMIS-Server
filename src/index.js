@@ -28,20 +28,29 @@ app.use(bodyParser.json());
 app.use("/status", statusRouter);
 app.use("/bin", binRouter);
 app.use("/waste", wasteRouter);
-app.use("/trashbin", trashbinRouter);
+app.use("/trashbin", trashbinRouter); 
 app.use("/auth", authRouter);
 app.use("/reports", reportsRouter);
 app.use("/building", buildingRouter);
 
-// const { setDoc, doc, collection, query, orderBy, limit, serverTimestamp } = require('firebase/firestore');
-// const db = require('./firebase');
-// const { CRUD } = require('./module/crud');
-// const buildingRef = collection(db, 'building');
-// const wasteRef = collection(db, 'waste');
+const { setDoc, doc, collection, query, orderBy, limit, serverTimestamp, getDoc, where, and } = require('firebase/firestore');
+const db = require('./firebase');
+const { CRUD } = require('./module/crud');
+const buildingRef = collection(db, 'building');
+const wasteRef = collection(db, 'waste');
 
-// app.post("/testing", async (req, res) => {
+app.get("/testing", async (req, res) => {
+  try {
+      const currentMonth = new Date()
 
-// });
+    const q = query(wasteRef, and(where("createdAt", ">=", new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1)), where('createdAt', '<=', new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0))))
+    const data = await CRUD.readAll(q)
+    res.send(data)
+  } catch (error) {
+    res.send({error : error.message})
+  }
+  
+});
 
 //scheduled functions
 const {

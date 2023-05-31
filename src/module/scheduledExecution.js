@@ -37,8 +37,7 @@ exports.wasteSchedPost = functions.pubsub
     buildings.forEach((campus) => {
       const building_list = [];
       let campus_name = campus.id;
-
-      const keys = Object.keys(campus);
+        const keys = Object.keys(campus);
       // building_name
       keys.forEach((key) => {
         if (key != "id") {
@@ -71,43 +70,19 @@ exports.wasteSchedPost = functions.pubsub
 
 // put predefined doc field for the current month
 exports.monthlyStatusSchedPost = functions.pubsub
-  .schedule("0 0 * */1 *")
+  .schedule("5 0 * */1 *")
   .timeZone("Asia/Manila")
   .onRun(async (context) => {
     const date = new Date();
     const month = date.getMonth();
     const year = date.getFullYear();
-    const month_list = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-    const docID = `${month_list[month]}-${year}`;
-    const monthDaysWith31Days = [
-      "January",
-      "March",
-      "May",
-      "July",
-      "August",
-      "October",
-      "December",
-    ];
+
     let days = 30;
     monthDaysWith31Days.forEach((raw_month) => {
       if (raw_month == month_list[month]) {
         days = 31;
       }
     });
-    console.log(days);
     // calculate building count
     const buildingDocs = await CRUD.readAll(buildingRef);
     const building_list = new Set();
@@ -130,20 +105,27 @@ exports.monthlyStatusSchedPost = functions.pubsub
     const average = total_weight / days;
 
     const data = {
-      registered_buildings: building_count,
-      weight: total_weight,
-      average: average,
+      registered_buildings: 0,
+      overall_total: 0,
+      types: {
+        food_waste: 0,
+        recyclable: 0,
+        residual: 0,
+      },
+      // [ ] list of buildings
+      buildings: {},
+      average: 0,
       createdAt: serverTimestamp(),
     };
-    const returnData = await setDoc(doc(db, "monthly", docID), data);
-    res.send(returnData);
+    await setDoc(doc(db, "monthly", docID), data);
+    return null;
   });
 
 // create pre-formatted docs for status
 // status contains overall info for the day
 // update this through the middleware
 exports.statusSchedPostDaily = functions.pubsub
-  .schedule("1 0 * * *")
+  .schedule("10 0 * * *")
   .timeZone("Asia/Manila")
   .onRun(async (context) => {
     const today = new Date();
@@ -162,6 +144,7 @@ exports.statusSchedPostDaily = functions.pubsub
       createdAt: serverTimestamp(),
     };
     await setDoc(doc(db, "status", docID), data);
+    return null;
   });
 
 // under construction
