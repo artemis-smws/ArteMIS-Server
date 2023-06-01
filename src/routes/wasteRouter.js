@@ -26,6 +26,6 @@ router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
     .patch(calculateTotalMiddleware, calculateMonthlyMiddleware ,calculateAverageMiddleware, WasteController.patchWaste)
-    .put(calculateTotalMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
+    .put(calculateTotalMiddleware, calculateMonthlyMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
 
 module.exports = router

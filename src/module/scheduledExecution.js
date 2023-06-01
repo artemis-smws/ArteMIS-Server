@@ -73,36 +73,36 @@ exports.monthlyStatusSchedPost = functions.pubsub
   .schedule("5 0 * */1 *")
   .timeZone("Asia/Manila")
   .onRun(async (context) => {
-    const date = new Date();
+    const buildingRef = collection(db, 'building')
+    const buildingList = await CRUD.readAll(buildingRef)
+    const building_list = {}
+    buildingList.forEach(campus => {
+      const keys = Object.keys(campus)
+      keys.forEach(building => {
+        if(building != 'id') {
+          Object.assign(building_list, {[building] : 0})
+        }
+      })
+    })
+    // create document id 
+    const date = new Date()
     const month = date.getMonth();
     const year = date.getFullYear();
-
-    let days = 30;
-    monthDaysWith31Days.forEach((raw_month) => {
-      if (raw_month == month_list[month]) {
-        days = 31;
-      }
-    });
-    // calculate building count
-    const buildingDocs = await CRUD.readAll(buildingRef);
-    const building_list = new Set();
-    buildingDocs.forEach((doc) => {
-      const keys = Object.keys(doc);
-      keys.forEach((key) => {
-        if (key != "id") {
-          building_list.add(key);
-        }
-      });
-    });
-    const building_count = building_list.size;
-
-    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(days));
-    const docs = await CRUD.readAll(q);
-    let total_weight = 0;
-    docs.forEach((doc) => {
-      total_weight += doc.overall_weight;
-    });
-    const average = total_weight / days;
+    const month_list = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    const docID = `${month_list[month]}-${year}`;
 
     const data = {
       registered_buildings: 0,
@@ -113,7 +113,7 @@ exports.monthlyStatusSchedPost = functions.pubsub
         residual: 0,
       },
       // [ ] list of buildings
-      buildings: {},
+      buildings: building_list,
       average: 0,
       createdAt: serverTimestamp(),
     };
