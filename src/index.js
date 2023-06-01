@@ -13,7 +13,7 @@ const reportsRouter = require("./routes/reportsRouter");
 const statusRouter = require("./routes/statusRouter");
 const buildingRouter = require("./routes/buildingRouter");
 
-const PORT = 1231;
+const PORT = 5131;
 
 const app = express();
 
@@ -33,24 +33,32 @@ app.use("/auth", authRouter);
 app.use("/reports", reportsRouter);
 app.use("/building", buildingRouter);
 
-const { setDoc, doc, collection, query, orderBy, limit, serverTimestamp, getDoc, where, and } = require('firebase/firestore');
-const db = require('./firebase');
-const { CRUD } = require('./module/crud');
-const buildingRef = collection(db, 'building');
-const wasteRef = collection(db, 'waste');
+// const { setDoc, doc, collection, query, orderBy, limit, serverTimestamp, getDoc, where, and } = require('firebase/firestore');
+// const db = require('./firebase');
+// const { CRUD } = require('./module/crud');
+// const buildingRef = collection(db, 'building');
+// const wasteRef = collection(db, 'waste');
 
-app.get("/testing", async (req, res) => {
-  try {
-      const currentMonth = new Date()
+// app.get("/testing", async (req, res) => {
+//   try {
+//       const currentMonth = new Date()
 
-    const q = query(wasteRef, and(where("createdAt", ">=", new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1)), where('createdAt', '<=', new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0))))
-    const data = await CRUD.readAll(q)
-    res.send(data)
-  } catch (error) {
-    res.send({error : error.message})
-  }
+//     const q = query(wasteRef, and(where("createdAt", ">=", new Date(currentMonth.getFullYear(), currentMonth.getMonth(), 1)), where('createdAt', '<=', new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0))))
+//     const data = await CRUD.readAll(q)
+//     const compiledDate = []
+//     data.forEach(doc =>{
+//       const miliseconds  = doc.createdAt.seconds * 1000 + Math.floor(doc.createdAt.nanoseconds / 1e6)
+//       const date = new Date(miliseconds)
+//       const day = date.getDate()
+//       const month = date.getMonth()
+//       compiledDate.push({day : day, month : month})
+//     })
+//     res.send(data)
+//   } catch (error) {
+//     res.send({error : error.message})
+//   }
   
-});
+// });
 
 //scheduled functions
 const {
