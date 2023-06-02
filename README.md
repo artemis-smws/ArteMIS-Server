@@ -34,13 +34,22 @@ https://us-central1-artemis-b18ae.cloudfunctions.net/server
 `POST` | `PUT` | `PATCH` | `GET` | `DELETE`
 
 ### Endpoints
-- `/waste` - Waste information coming from the Mobile users and processed to the admin dashboard
-- `/bin` - Contains data being gathered by ArteMIS IoT Trash bin through sensors. 
+- `/waste` - get all the waste information for the duration of the project
+- `/waste/latest` - get the current day's data of waste management
+- `/waste/latest/7days` - get the waste management data from the last 7 days 
+- `/waste/latest/30days - get the waste management data from the last 30 days 
+- `/bin` - Contains data being gathered by ArteMIS IoT Trash bin through sensors.
+- `/waste/highest` - get the document with the highest overall waste generated weight.
+- `/waste/lowest` - get the document with the lowest overall waste generated weight.
 - `/trashbin` - Information about each ArteMIS IoT Trahs bin. Used to register new trash bins to the system
 - `/auth` - used to authenticated the users 
 - `/reports` - contains reports information to be passed on the admin and facility staffs. 
-- `/status` - contains summary reports from data collected and processed from Mobile 
+- `/status` - contains summary reports of collected and processed data. This is geenerated per day.
+- `/status/latest` - get the latest summary report for the current day. This also contains latest updates in the database.
+- `/status/monthly` - contains overall data for the whole duration of the month. This is updated in realtime.
+- `/status/monthly/latest` - gets the latest / current month data. 
 - `/building` - list of campus and building within each campus. Each building contains coordinates of its location. 
+- `/building/:campus_name` - get only the building for the specified campus and their geolocation which contains the latitude and longitude position of it.
 
 ### Data Request Schema 
 - `/waste/:id` (PATCH / PUT) - the id will be coming from the latest doc in the collection. Get this from `/waste/latest`
