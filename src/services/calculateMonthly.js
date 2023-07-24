@@ -1,13 +1,11 @@
-const { CRUD } = require("../module/crud");
-const { getLatest } = require("../module/getLatest");
+const { CRUD } = require("../utils/crud");
+const { getLatest } = require("../utils/getLatest");
 const { doc, collection, updateDoc, query, orderBy, limit, serverTimestamp, where } = require("firebase/firestore");
-const db = require("../firebase");
+const { buildingRef, wasteRef, monthlyRef } = require("../utils/getDocReference")
+const db = require("../config/firebase");
 
 exports.calculateMonthlyMiddleware = async (req, res, next) => {
-  const monthlyRef = collection(db, "monthly");
-  const buildingRef = collection(db, "building");
-  const statusRef = collection(db, "status");
-  const wasteRef = collection(db, "waste");
+
   const latestMonthDoc = await getLatest(monthlyRef);
   const buildingDocs = await CRUD.readAll(buildingRef);
   const req_keys = Object.keys(req.body);

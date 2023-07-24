@@ -1,8 +1,8 @@
 const { collection, queryEqual, doc } = require("firebase/firestore");
-const db = require("../firebase");
+const db = require("../config/firebase");
 
-const { CRUD } = require("../module/crud");
-const { getLatest } = require("../module/getLatest");
+const { CRUD } = require("../utils/crud");
+const { getLatest } = require("../utils/getLatest");
 
 const wasteRef = collection(db, "waste");
 

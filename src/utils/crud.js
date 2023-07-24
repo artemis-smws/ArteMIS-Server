@@ -1,5 +1,5 @@
-const { getDocs, getDoc, addDoc, updateDoc, doc, deleteDoc, setDoc } = require("firebase/firestore")
-const db = require("../firebase")
+const { getDocs, getDoc, addDoc, updateDoc, deleteDoc, setDoc } = require("firebase/firestore")
+const db = require("../config/firebase")
 
 exports.CRUD = {
     create : async(reference, passed_data) => {
@@ -10,6 +10,7 @@ exports.CRUD = {
             return {error : e.message}
         }
     },
+    // pass either a collection or doc type reference
     createSpecific : async(reference, passed_data) => {
         try {
             await setDoc(reference, passed_data)
@@ -18,6 +19,7 @@ exports.CRUD = {
             return {error : e.message}
         }
     },
+    // returns an array of objects 
     readAll : async(reference) => {
         const data = []
         await getDocs(reference)
@@ -28,7 +30,7 @@ exports.CRUD = {
             })
         return data
     },
-    // pass doc type reference 
+    // returns single object
     read : async(reference) => {
         const data = []
         await getDoc(reference)

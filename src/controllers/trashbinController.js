@@ -5,12 +5,12 @@ const {
   onSnapshot,
   deleteDoc,
 } = require("firebase/firestore");
-const db = require("../firebase");
+const db = require("../config/firebase");
 
 const trashbinRef = collection(db, "trashbin");
 
 const Trashbin = require("../models/trashbin");
-const { CRUD } = require("../module/crud");
+const { CRUD } = require("../utils/crud");
 
 exports.TrashbinController = {
   getAllTrashbin: async(req, res) => {

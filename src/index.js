@@ -66,7 +66,7 @@ const {
   statusSchedPostDaily,
   monthlyStatusSchedPost,
   weeklyWasteSchedPost,
-} = require("./module/scheduledExecution");
+} = require("./services/scheduledExecution");
 
 exports.wasteSchedPost = wasteSchedPost;
 exports.yearly_wasteSchedPost = yearlyWasteSchedPost;

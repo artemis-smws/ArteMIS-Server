@@ -1,6 +1,5 @@
 const functions = require("firebase-functions");
-
-const db = require("../firebase");
+const db = require("../config/firebase");
 const {
   addDoc,
   collection,
@@ -11,15 +10,10 @@ const {
   orderBy,
   limit,
 } = require("firebase/firestore");
-const { CRUD } = require("./crud");
-const { getLatest, getLast7Days } = require("./getLatest");
-
-const wasteRef = collection(db, "waste");
-const yearlyRef = collection(db, "yearly");
-const statusRef = collection(db, "status");
-const monthlyRef = collection(db, "monthly");
-const buildingRef = collection(db, "building");
-const weeklyRef = collection(db, "weekly");
+const { CRUD } = require("../utils/crud");
+const { getLatest, getLast7Days } = require("../utils/getLatest");
+const { wasteRef, buildingRef, weeklyRef} = require("../utils/getDocReference");
+const createDateId = require("../utils/createDateId");
 
 // put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
@@ -30,9 +24,7 @@ exports.wasteSchedPost = functions.pubsub
       overall_weight: 0,
       createdAt: serverTimestamp(),
     };
-
     const buildings = await CRUD.readAll(buildingRef);
-
     // treated by campus
     buildings.forEach((campus) => {
       const building_list = [];
@@ -62,8 +54,8 @@ exports.wasteSchedPost = functions.pubsub
         });
       });
     });
-
-    addDoc(wasteRef, data);
+    const docName = createDateId()
+    await setDoc(doc(db, 'waste', docName), data);
     console.log("successfully posted");
     return null;
   });
@@ -128,11 +120,7 @@ exports.statusSchedPostDaily = functions.pubsub
   .schedule("10 0 * * *")
   .timeZone("Asia/Manila")
   .onRun(async (context) => {
-    const today = new Date();
-    const day = today.getDate();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const docID = `${month}-${day}-${year % 100}`;
+    const docID = createDateId();
 
     const data = {
       buildings_count: 0,
