@@ -1,11 +1,11 @@
-const db = require("../firebase");
+const db = require("../config/firebase");
 const {
   collection,
   doc,
   serverTimestamp,
 } = require("firebase/firestore");
 const Bin = require("../models/bin");
-const { CRUD } = require("../module/crud");
+const { CRUD } = require("../utils/crud");
 
 const binRef = collection(db, "bin");
 

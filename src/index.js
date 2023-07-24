@@ -66,13 +66,10 @@ const {
   statusSchedPostDaily,
   monthlyStatusSchedPost,
   weeklyWasteSchedPost,
-} = require("./module/scheduledExecution");
+} = require("./services/scheduledExecution");
 
 exports.wasteSchedPost = wasteSchedPost;
-exports.yearly_wasteSchedPost = yearlyWasteSchedPost;
-exports.monthlyStatusSchedPost = monthlyStatusSchedPost;
-exports.statusSchedPostDaily = statusSchedPostDaily;
-exports.weeklyStatusSchedPost = weeklyWasteSchedPost;
+// exports.statusSchedPostDaily = statusSchedPostDaily;
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);

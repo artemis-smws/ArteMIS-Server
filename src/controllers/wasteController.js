@@ -11,10 +11,9 @@ const {
   limit,
   getDoc,
 } = require("firebase/firestore");
-const db = require("../firebase");
-const { CRUD } = require("../module/crud");
-
-const wasteRef = collection(db, "waste");
+const db = require("../config/firebase");
+const { CRUD } = require("../utils/crud");
+const { wasteRef } = require('../utils/getDocReference')
 
 exports.WasteController = {
   getAllWaste: async (req, res) => {
@@ -82,7 +81,8 @@ exports.WasteController = {
   },
   postWaste: async (req, res) => {
     try {
-      const data = await CRUD.create(wasteRef, {
+      const docRef = doc(db, "waste", serverTimestamp())
+      const data = await CRUD.createSpecific(wasteRef, {
         ...req.body,
         createdAt: serverTimestamp(),
       });

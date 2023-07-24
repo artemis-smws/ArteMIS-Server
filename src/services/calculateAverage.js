@@ -1,7 +1,7 @@
 const { doc, collection, serverTimestamp, updateDoc, addDoc } = require("firebase/firestore")
-const db = require("../firebase")
-const { CRUD } = require("../module/crud")
-const { getLatest } = require("../module/getLatest")
+const db = require("../config/firebase")
+const { CRUD } = require("../utils/crud")
+const { getLatest } = require("../utils/getLatest")
 
 const statusRef = collection(db, 'status')
 const wasteRef = collection(db, 'waste')

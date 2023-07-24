@@ -6,11 +6,11 @@ const {
   deleteDoc,
   deleteField,
 } = require("firebase/firestore");
-const db = require("../firebase");
+const db = require("../config/firebase");
 
 const buildingRef = collection(db, "building");
 
-const { CRUD } = require("../module/crud");
+const { CRUD } = require("../utils/crud");
 
 exports.BuildingController = {
   getAllBuilding: async (req, res) => {

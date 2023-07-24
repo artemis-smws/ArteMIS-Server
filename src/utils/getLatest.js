@@ -4,7 +4,7 @@ const {
   query,
   doc,
 } = require("firebase/firestore");
-const db = require("../firebase");
+const db = require("../config/firebase");
 const { CRUD } = require("./crud");
 
 // reference = collectionReference

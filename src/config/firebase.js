@@ -2,7 +2,7 @@ const { initializeApp } = require("firebase/app")
 const {getAnalytics, isSupported} = require("firebase/analytics")
 const {getFirestore} = require("firebase/firestore")
 
-const config = require('./config/config.js')
+const config = require('./config.js')
 
 const firebase = initializeApp(config.firebaseConfig);
 
