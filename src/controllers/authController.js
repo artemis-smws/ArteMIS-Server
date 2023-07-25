@@ -11,11 +11,11 @@ const auth = getAuth();
 exports.AuthController = {
   signup: (req, res) => {
     if (!req.body.email || !req.body.password) {
-      res.status(400).send({ error: "email and password is required" });
+      res.status(400).send({ error: "Email and password is required" });
     }
     createUserWithEmailAndPassword(auth, req.body.email, req.body.password)
-      .then((cred) => {
-        res.send(cred);
+      .then((userCredentials) => {
+        res.send(userCredentials.user);
       })
       .catch((e) => {
         res.status(500).send({ error: e.message });
@@ -26,8 +26,8 @@ exports.AuthController = {
       res.status(400).send({ error: "Email and password is required" });
     }
     signInWithEmailAndPassword(auth, req.body.email, req.body.password)
-      .then((cred) => {
-        res.send(cred);
+      .then((userCredentials) => {
+        res.send(userCredentials.user);
       })
       .catch((e) => {
         res.status(500).send({ error: e.message });
@@ -49,7 +49,7 @@ exports.AuthController = {
   signout: (req, res) => {
     signOut(auth)
       .then(() => {
-        res.send({ message: "Successfully signed out" });
+        res.send({ message: "Signed out successfully!" });
       })
       .catch((e) => {
         res.status(500).send({ message: e.message });

@@ -1,0 +1,2 @@
+GET https://us-central1-artemis-b18ae.cloudfunctions.net/server/building
+```

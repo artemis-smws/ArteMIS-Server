@@ -1,7 +1,7 @@
 const { getDocs, getDoc, addDoc, updateDoc, deleteDoc, setDoc } = require("firebase/firestore")
 const db = require("../config/firebase")
 
-exports.CRUD = {
+exports.    CRUD = {
     create : async(reference, passed_data) => {
         try {
             await addDoc(reference, passed_data)
@@ -31,7 +31,7 @@ exports.CRUD = {
         return data
     },
     // returns single object
-    read : async(reference) => {
+    read : async(reference, model) => {
         const data = []
         await getDoc(reference)
             .then(snapshot => {

@@ -33,39 +33,9 @@ app.use("/auth", authRouter);
 app.use("/reports", reportsRouter);
 app.use("/building", buildingRouter);
 
-// const {
-//   setDoc,
-//   doc,
-//   collection,
-//   query,
-//   orderBy,
-//   limit,
-//   serverTimestamp,
-//   getDoc,
-//   where,
-//   and,
-// } = require("firebase/firestore");
-// const db = require("./firebase");
-// const { CRUD } = require("./module/crud");
-// const buildingRef = collection(db, "building");
-// const wasteRef = collection(db, "waste");
-
-// app.get("/testing", async (req, res) => {
-//   try {
-    
-//     res.send('SUCCESS');
-//   } catch (error) {
-//     res.send({ error: error.message });
-//   }
-// });
-
 //scheduled functions
 const {
   wasteSchedPost,
-  yearlyWasteSchedPost,
-  statusSchedPostDaily,
-  monthlyStatusSchedPost,
-  weeklyWasteSchedPost,
 } = require("./services/scheduledExecution");
 
 exports.wasteSchedPost = wasteSchedPost;

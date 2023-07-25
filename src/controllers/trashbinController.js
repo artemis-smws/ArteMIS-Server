@@ -14,7 +14,6 @@ const { CRUD } = require("../utils/crud");
 
 exports.TrashbinController = {
   getAllTrashbin: async(req, res) => {
-    const data = [];
     try {
       const data = await CRUD.readAll(trashbinRef);
       res.send(data);
