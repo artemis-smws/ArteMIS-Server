@@ -23,21 +23,21 @@ router.get('/lowest', WasteController.getLowest)
 router.get('/latest', WasteController.getLatest)
 router.get('/latest/7days', WasteController.getLast7Days)
 router.get('/latest/30days', WasteController.getLast30Days)
-// router.post('/add-scheduled', async(req, res) => {
-//     const data = await defaultWasteSchema()
-//     // const docName = "12-6-23"
-//     const docNames = ['12-6-23', '12-7-23', '12-8-23', '12-9-23', '12-10-23', '12-11-23', '12-12-23', '12-13-23']
-//     await docNames.forEach(async(docname) => {
-//         await setDoc(doc(db, 'waste', docname), data)
-//     })
-//     res.send({message : data})
-// })
+router.post('/add-scheduled', async(req, res) => {
+    const data = await defaultWasteSchema()
+    const docNames = ['12-6-23', '12-7-23', '12-8-23', '12-9-23', '12-10-23', '12-11-23', '12-12-23', '12-13-23']
+    await docNames.forEach(async(docname) => {
+        await setDoc(doc(db, 'waste', docname), data)
+    })
+    res.send({message : data})
+})
+router.post('/reset-current', WasteController.resetCurrentWaste)
 
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
     // .patch(calculateTotalMiddleware, calculateMonthlyMiddleware ,calculateAverageMiddleware, WasteController.patchWaste)
     // .put(calculateTotalMiddleware, calculateMonthlyMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
-    .put(WasteController.patchWaste)
+    .put(calculateTotalMiddleware, WasteController.patchWaste)
 
 module.exports = router

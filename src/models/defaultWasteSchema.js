@@ -6,6 +6,10 @@ async function defaultWasteSchema() {
     const buildingList = await retrieveBuildingList();
     let data = {
         overall_weight: 0,
+        overall_residual: 0,
+        overall_recyclable: 0,
+        overall_biodegradable: 0,
+        overall_infectious: 0,
         createdAt: serverTimestamp(),
     }
     buildingList.forEach(building => {

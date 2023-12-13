@@ -14,7 +14,8 @@ const {
 const db = require("../config/firebase");
 const { CRUD } = require("../utils/crud");
 const { wasteRef } = require('../utils/getDocReference');
-const { getLast30Days } = require("../utils/getLatest");
+const { getLast30Days, getLatest } = require("../utils/getLatest");
+const { defaultWasteSchema } = require("../models/defaultWasteSchema");
 
 exports.WasteController = {
   getAllWaste: async (req, res) => {
@@ -102,35 +103,50 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
+  resetCurrentWaste: async (req, res) => {
+    try {
+      const latest = await getLatest(wasteRef)
+      const id = latest[0].id
+      const docRef = doc(db, "waste", id)
+      const defaultData = await defaultWasteSchema()
+      const data = await CRUD.update(docRef, defaultData)
+      res.send(data)
+    } catch (e) {
+      res.status(500).send({error : e.message})
+    }
+  },
   // only access for the users
   patchWaste: async (req, res) => {
     try {
       const id = req.params.id;
-      const keys = Object.keys(req.body);
-      let building_name = "";
-      keys.forEach((key) => {
-        if (
-          key != "overall_weight" &&
-          key != "overall_food_waste" &&
-          key != "overall_recyclable" &&
-          key != "overall_residual"
-        ) {
-          building_name = key;
-        }
-      });
+      const {
+        building_name,
+        campus,
+        weight,
+        overall_weight,
+        overall_residual,
+        overall_recyclable,
+        overall_infectious,
+        overall_biodegradable
+      } = req.body
       const docRef = doc(db, "waste", id);
-      // update current waste document
+      
       const data = await CRUD.update(docRef, {
         [building_name]: {
-          campus: req.body[building_name].campus,
+          campus: campus,
           weight: {
-            food_waste: req.body[building_name].weight.food_waste,
-            residual: req.body[building_name].weight.residual,
-            recyclable: req.body[building_name].weight.recyclable,
-            total: req.body[building_name].weight.total,
+            biodegradable: weight.biodegradable,
+            residual: weight.residual,
+            recyclable: weight.recyclable,
+            infectious: weight.infectious,
+            total: weight.total,
           },
         },
-        overall_weight: req.body.overall_weight,
+        overall_weight: overall_weight,
+        overall_residual : overall_residual,
+        overall_recyclable : overall_recyclable,
+        overall_infectious : overall_infectious,
+        overall_biodegradable : overall_biodegradable
       });
       res.send(data);
     } catch (e) {
