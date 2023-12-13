@@ -1,0 +1,13 @@
+name : Function Deploy
+run-name : ${{ github.actor }} is deploying firebase functions 🚀
+on : pull_request
+jobs : 
+    build_and_preview: 
+        if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v3
+            - run: npm ci
+            - run: npm run build
+            - run: npm run deploy
+
