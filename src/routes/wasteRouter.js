@@ -36,7 +36,8 @@ router.get('/latest/30days', WasteController.getLast30Days)
 router.route('/:id')
     .get(WasteController.getWaste)
     .delete(WasteController.deleteWaste)
-    .patch(calculateTotalMiddleware, calculateMonthlyMiddleware ,calculateAverageMiddleware, WasteController.patchWaste)
-    .put(calculateTotalMiddleware, calculateMonthlyMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
+    // .patch(calculateTotalMiddleware, calculateMonthlyMiddleware ,calculateAverageMiddleware, WasteController.patchWaste)
+    // .put(calculateTotalMiddleware, calculateMonthlyMiddleware, calculateAverageMiddleware, WasteController.patchWaste)
+    .put(WasteController.patchWaste)
 
 module.exports = router
