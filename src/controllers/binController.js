@@ -4,7 +4,7 @@ const {
   doc,
   serverTimestamp,
 } = require("firebase/firestore");
-const Bin = require("../models/bin");
+// const Bin = require("../models/bin");
 const { CRUD } = require("../utils/crud");
 
 const binRef = collection(db, "bin");

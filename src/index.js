@@ -36,10 +36,6 @@ app.use("/building", buildingRouter);
 //scheduled functions
 const {
   wasteSchedPost,
-  yearlyWasteSchedPost,
-  statusSchedPostDaily,
-  monthlyStatusSchedPost,
-  weeklyWasteSchedPost,
 } = require("./services/scheduledExecution");
 
 exports.wasteSchedPost = wasteSchedPost;

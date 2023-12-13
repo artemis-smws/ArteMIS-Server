@@ -9,12 +9,11 @@ const db = require("../config/firebase");
 
 const trashbinRef = collection(db, "trashbin");
 
-const Trashbin = require("../models/trashbin");
+// const Trashbin = require("../models/trashbin");
 const { CRUD } = require("../utils/crud");
 
 exports.TrashbinController = {
   getAllTrashbin: async(req, res) => {
-    const data = [];
     try {
       const data = await CRUD.readAll(trashbinRef);
       res.send(data);

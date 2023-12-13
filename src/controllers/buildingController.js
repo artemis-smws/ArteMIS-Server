@@ -7,14 +7,12 @@ const {
   deleteField,
 } = require("firebase/firestore");
 const db = require("../config/firebase");
-
 const buildingRef = collection(db, "building");
 
 const { CRUD } = require("../utils/crud");
 
 exports.BuildingController = {
   getAllBuilding: async (req, res) => {
-    const data = [];
     try {
       const data = await CRUD.readAll(buildingRef);
       res.send(data);
@@ -64,3 +62,13 @@ exports.BuildingController = {
     }
   },
 };
+
+function validateDataModel(input) {
+  const data = new Building(
+    input.id,
+    input.building_name,
+    input.longitude,
+    input.latitude
+  )
+  return data
+}

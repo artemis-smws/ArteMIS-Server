@@ -1,0 +1,9 @@
+POST http://localhost:1512/auth/signup    
+
+{
+    "username": "kairustecsonpersonal@gmail.com",
+    "password": "test"
+}
+
+###
+
