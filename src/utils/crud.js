@@ -56,5 +56,5 @@ exports.    CRUD = {
         } catch(e) {
             return {error : e.message}
         }
-    }
+    },
 }

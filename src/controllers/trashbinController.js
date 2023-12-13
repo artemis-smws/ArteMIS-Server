@@ -9,7 +9,7 @@ const db = require("../config/firebase");
 
 const trashbinRef = collection(db, "trashbin");
 
-const Trashbin = require("../models/trashbin");
+// const Trashbin = require("../models/trashbin");
 const { CRUD } = require("../utils/crud");
 
 exports.TrashbinController = {

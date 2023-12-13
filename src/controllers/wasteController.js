@@ -13,7 +13,8 @@ const {
 } = require("firebase/firestore");
 const db = require("../config/firebase");
 const { CRUD } = require("../utils/crud");
-const { wasteRef } = require('../utils/getDocReference')
+const { wasteRef } = require('../utils/getDocReference');
+const { getLast30Days } = require("../utils/getLatest");
 
 exports.WasteController = {
   getAllWaste: async (req, res) => {
