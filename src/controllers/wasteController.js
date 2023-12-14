@@ -20,7 +20,8 @@ const { defaultWasteSchema } = require("../models/defaultWasteSchema");
 exports.WasteController = {
   getAllWaste: async (req, res) => {
     try {
-      const data = await CRUD.readAll(wasteRef);
+      const q = query(wasteRef, orderBy("createdAt", "asc"))
+      const data = await CRUD.readAll(q);
       res.send(data);
     } catch (e) {
       res.status(500).send({ error: e.message });
