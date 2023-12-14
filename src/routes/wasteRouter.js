@@ -31,7 +31,7 @@ router.post('/add-scheduled', async(req, res) => {
     })
     res.send({message : data})
 })
-router.post('/reset-current', WasteController.resetCurrentWaste)
+router.post('/reset-current/:id', WasteController.resetWasteData)
 
 router.route('/:id')
     .get(WasteController.getWaste)

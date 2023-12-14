@@ -3,30 +3,48 @@ const db = require("../config/firebase");
 const { getLatest } = require("../utils/getLatest");
 
 exports.calculateTotalMiddleware = async (req, res, next) => {
-  const {
-    building_name,
-    weight
-  } = req.body
+  const { building_name, weight } = req.body;
+
+  let totalWeightVar = 0;
+  let totalBiodegradableVar = 0;
+  let totalRecyclableVar = 0;
+  let totalResidualVar = 0;
+  let totalInfectiousVar = 0;
+  const buildingListVar = [];
 
   const wasteRef = collection(db, "waste");
   const latestDoc = await getLatest(wasteRef);
-  const {overall_recyclable, overall_residual, overall_biodegradable, overall_infectious, overall_weight} = latestDoc[0]
-  // if the building to post already has a data
-  // remove the existing data and replace it with the new data for the overall weights
-  if(latestDoc[0][building_name].weight.total != 0) {
-    const {biodegradable, recyclable, residual, infectious, total} = latestDoc[0][building_name].weight
-    req.body.overall_weight = (overall_weight - total) + weight.total
-    req.body.overall_biodegradable = (overall_biodegradable - biodegradable) + weight.biodegradable
-    req.body.overall_recyclable = (overall_recyclable - recyclable.total) + weight.recyclable.total
-    req.body.overall_residual = (overall_residual - residual) + weight.residual
-    req.body.overall_infectious = (overall_infectious - infectious) + infectious
-  } else {
-    req.body.overall_weight = overall_weight + weight.total;
-    req.body.overall_biodegradable = overall_biodegradable + weight.biodegradable || 0;
-    req.body.overall_recyclable = overall_recyclable + weight.recyclable.total || 0;
-    req.body.overall_residual = overall_residual + weight.residual || 0;
-    req.body.overall_infectious = overall_infectious + weight.infectious || 0
-  }
+
+  const docKeys = Object.keys(latestDoc[0]);
+  docKeys.forEach((key) => {
+    if (
+      key != "overall_weight" &&
+      key != "id" &&
+      key != "createdAt" &&
+      key != "overall_residual" &&
+      key != "overall_recyclable" &&
+      key != "overall_biodegradable" &&
+      key != "overall_infectious"
+    ) {
+      buildingListVar.push(key);
+    }
+  });
+  // add overall total weights excluding the current building on input (even if 0)
+  buildingListVar.forEach(building => {
+    if (building != building_name) {
+      totalWeightVar += latestDoc[0][building].weight.total || 0
+      totalRecyclableVar += latestDoc[0][building].weight.recyclable.total || 0
+      totalResidualVar += latestDoc[0][building].weight.residual || 0
+      totalBiodegradableVar += latestDoc[0][building].weight.biodegradable || 0
+      totalInfectiousVar += latestDoc[0][building].weight.infectious || 0
+    } 
+  })
+  // add the current inputs 
+  req.body.overall_weight = totalWeightVar + weight.total
+  req.body.overall_biodegradable = totalBiodegradableVar + weight.biodegradable
+  req.body.overall_recyclable = totalRecyclableVar + weight.recyclable.total
+  req.body.overall_residual = totalResidualVar + weight.residual
+  req.body.overall_infectious = totalInfectiousVar + weight.infectious
 
   next();
 };

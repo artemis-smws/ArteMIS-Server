@@ -103,10 +103,9 @@ exports.WasteController = {
       res.status(500).send({ error: e.message });
     }
   },
-  resetCurrentWaste: async (req, res) => {
+  resetWasteData: async (req, res) => {
     try {
-      const latest = await getLatest(wasteRef)
-      const id = latest[0].id
+      const id = req.params.id
       const docRef = doc(db, "waste", id)
       const defaultData = await defaultWasteSchema()
       const data = await CRUD.update(docRef, defaultData)

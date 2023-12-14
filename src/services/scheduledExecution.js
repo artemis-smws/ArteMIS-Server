@@ -18,7 +18,7 @@ const { defaultWasteSchema } = require("../models/defaultWasteSchema");
 
 // put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
-  .schedule("1 0 * * *")
+  .schedule("5 0 * * *")
   .timeZone("Asia/Manila")
   .onRun(async (context) => {
     const data = await defaultWasteSchema();
