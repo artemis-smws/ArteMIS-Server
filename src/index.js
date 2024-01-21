@@ -14,7 +14,6 @@ const statusRouter = require("./routes/statusRouter");
 const buildingRouter = require("./routes/buildingRouter");
 
 const PORT = 1512;
-
 const app = express();
 
 
@@ -35,11 +34,28 @@ app.use("/auth", authRouter);
 app.use("/reports", reportsRouter);
 app.use("/building", buildingRouter);
 
+app.post("/iot", async (req , res) => {
+  try {
+    const iotDoc = doc(db, "iot", "Vj3orFvyls0uj1dKby1E")
+    const iotRef = collection(db, "iot")
+    const status = await CRUD.update(iotDoc, {
+      ...req.body,
+      createdAt : serverTimestamp()
+    })
+    res.send(status)
+  } catch (e) {
+    res.send({error : e.message})
+  }
+})
+
 //scheduled functions
 const {
   wasteSchedPost,
 } = require("./services/scheduledExecution");
 const createDateId = require("./utils/createDateId");
+const { CRUD } = require("./utils/crud");
+const { collection, serverTimestamp, doc } = require("firebase/firestore");
+const db = require("./config/firebase");
 
 exports.wasteSchedPost = wasteSchedPost;
 

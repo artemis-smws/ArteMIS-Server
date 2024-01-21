@@ -46,7 +46,7 @@ exports.WasteController = {
     }
   },
   getLast30Days: async (req, res) => {
-    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(7));
+    const q = query(wasteRef, orderBy("createdAt", "desc"), limit(30));
     try {
       const docs = await CRUD.readAll(q);
       res.send(docs);
