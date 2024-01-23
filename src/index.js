@@ -34,20 +34,6 @@ app.use("/auth", authRouter);
 app.use("/reports", reportsRouter);
 app.use("/building", buildingRouter);
 
-app.post("/iot", async (req , res) => {
-  try {
-    const iotDoc = doc(db, "iot", "Vj3orFvyls0uj1dKby1E")
-    const iotRef = collection(db, "iot")
-    const status = await CRUD.update(iotDoc, {
-      ...req.body,
-      createdAt : serverTimestamp()
-    })
-    res.send(status)
-  } catch (e) {
-    res.send({error : e.message})
-  }
-})
-
 //scheduled functions
 const {
   wasteSchedPost,
@@ -63,4 +49,4 @@ app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
 });
 
-exports.server = functions.https.onRequest(app);
+exports.v1 = functions.https.onRequest(app);
