@@ -23,14 +23,9 @@ router.get('/lowest', WasteController.getLowest)
 router.get('/latest', WasteController.getLatest)
 router.get('/latest/7days', WasteController.getLast7Days)
 router.get('/latest/30days', WasteController.getLast30Days)
-router.post('/add-scheduled', async(req, res) => {
-    const data = await defaultWasteSchema()
-    const docNames = ['12-6-23', '12-7-23', '12-8-23', '12-9-23', '12-10-23', '12-11-23', '12-12-23', '12-13-23']
-    await docNames.forEach(async(docname) => {
-        await setDoc(doc(db, 'waste', docname), data)
-    })
-    res.send({message : data})
-})
+router.get('/latest/90days', WasteController.getLast90Days)
+router.get('/latest/365days', WasteController.getLast365Days)
+
 router.post('/reset-current/:id', WasteController.resetWasteData)
 
 router.route('/:id')
