@@ -1,14 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const {BinController} = require('../controllers/binController')
+const {BinStatusController} = require('../controllers/binStatusController')
 
+router.route('/latest/:trashbin_name')
+    .get(BinStatusController.getLatestBinStatus)
 router.route('/')
-    .get(BinController.getAllBin)
-    .post(BinController.addBin)
-
+    .get(BinStatusController.getAllBin)
+    .post(BinStatusController.addBin)
 router.route('/:id')
-    .get(BinController.getBin)
-    .patch(BinController.patchBin)
+    .get(BinStatusController.getBin)
+    .patch(BinStatusController.patchBin)
 
     
 module.exports = router
