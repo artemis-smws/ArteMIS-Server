@@ -13,7 +13,7 @@ const reportsRouter = require("./routes/reportsRouter");
 const statusRouter = require("./routes/statusRouter");
 const buildingRouter = require("./routes/buildingRouter");
 
-const PORT = 1512;
+const PORT = 3000;
 const app = express();
 
 
@@ -63,4 +63,4 @@ app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);
 });
 
-exports.server = functions.https.onRequest(app);
+exports.v1 = functions.https.onRequest(app);

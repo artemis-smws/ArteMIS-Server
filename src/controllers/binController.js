@@ -30,11 +30,11 @@ exports.BinController = {
       res.status(500).send({ error: err.message });
     }
   },
-  getBin: (req, res) => {
+  getBin: async (req, res) => {
     try {
       const id = req.params.id;
       const docRef = doc(db, "bin", id);
-      const data = CRUD.read(docRef);
+      const data = await CRUD.read(docRef);
       res.send(data);
     } catch (err) {
       res.status(500).send({ error: err.message });
