@@ -50,14 +50,12 @@ app.post("/iot", async (req , res) => {
 
 //scheduled functions
 const {
-  wasteSchedPost,
-} = require("./services/scheduledExecution");
-const createDateId = require("./utils/createDateId");
-const { CRUD } = require("./utils/crud");
-const { collection, serverTimestamp, doc } = require("firebase/firestore");
-const db = require("./config/firebase");
+  wasteSchedPost
+} = require("./services/scheduledAddWasteData");
+const { AddBinData } = require("./services/scheduledAddBinData");
 
 exports.wasteSchedPost = wasteSchedPost;
+exports.binSchedPost = AddBinData
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);

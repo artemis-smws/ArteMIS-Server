@@ -27,3 +27,4 @@ exports.wasteSchedPost = functions.pubsub
     console.log("successfully posted");
     return null;
   });
+
