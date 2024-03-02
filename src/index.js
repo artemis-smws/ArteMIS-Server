@@ -55,7 +55,7 @@ const {
 const { AddBinData } = require("./services/scheduledAddBinData");
 
 exports.wasteSchedPost = wasteSchedPost;
-exports.binSchedPost = AddBinData
+exports.binSchedPost = AddBinData;
 
 app.listen(PORT, () => {
   console.log(`Listening at http://localhost:${PORT}`);

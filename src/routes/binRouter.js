@@ -12,9 +12,10 @@ router.route('/latest/:trashbin_name')
 router.route('/')
     .get(BinStatusController.getAllBin)
     .post(BinStatusController.addBin)
+router.route('/add-latest')
+    .get(BinStatusController.addLatestBinStatus)
 router.route('/:id')
     .get(BinStatusController.getBin)
     .post(BinStatusController.patchBin)
-
     
 module.exports = router
