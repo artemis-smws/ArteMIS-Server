@@ -1,0 +1,18 @@
+[debug] [2024-03-04T00:58:12.142Z] ----------------------------------------------------------------------
+[debug] [2024-03-04T00:58:12.144Z] Command:       /home/kai-noah/.nvm/versions/node/v20.11.1/bin/node /home/kai-noah/.nvm/versions/node/v20.11.1/bin/firebase deploy --only functions
+[debug] [2024-03-04T00:58:12.144Z] CLI Version:   13.4.0
+[debug] [2024-03-04T00:58:12.144Z] Platform:      linux
+[debug] [2024-03-04T00:58:12.144Z] Node Version:  v20.11.1
+[debug] [2024-03-04T00:58:12.145Z] Time:          Mon Mar 04 2024 08:58:12 GMT+0800 (Philippine Standard Time)
+[debug] [2024-03-04T00:58:12.145Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2024-03-04T00:58:12.201Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2024-03-04T00:58:12.202Z] > authorizing via signed-in user (artemis.batstateu@gmail.com)
+[debug] [2024-03-04T00:58:12.202Z] [iam] checking project artemis-b18ae for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2024-03-04T00:58:12.204Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions [none]
+[debug] [2024-03-04T00:58:12.204Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions x-goog-quota-user=projects/artemis-b18ae
+[debug] [2024-03-04T00:58:12.204Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-03-04T00:58:13.287Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions 200
+[debug] [2024-03-04T00:58:13.288Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/artemis-b18ae:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2024-03-04T00:58:13.288Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2024-03-04T00:58:13.288Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/artemis-b18ae/serviceAccounts/artemis-b18ae@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}

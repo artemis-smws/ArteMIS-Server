@@ -7,7 +7,7 @@ const { CRUD } = require('../utils/crud')
 const BinDataModel = require('../models/binWasteSchema')
 const createDateId = require('../utils/createDateId')
 
-router.route('/latest/:trashbin_name')
+router.route('/latest')
     .get(BinStatusController.getLatestBinStatus)
 router.route('/')
     .get(BinStatusController.getAllBin)
