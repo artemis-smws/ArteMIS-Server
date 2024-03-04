@@ -79,9 +79,6 @@ exports.BinStatusController = {
 	},
 	getLatestBinStatus: async (req, res) => {
 		try {
-			if(req.params.trashbin_name === undefined){
-				res.status(400).send({ error: "Please provide trashbin name" });
-			}
 			const trashbinRef = collection(db, "trashbin");
 			const binCount = await getCountFromServer(trashbinRef)
 			const q = query(binRef, orderBy("timestamp", "desc"), limit(binCount.data().count));
