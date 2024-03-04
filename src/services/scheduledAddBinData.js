@@ -15,7 +15,7 @@ exports.AddBinData = functions.pubsub
 			const trashbinList = await CRUD.readAll(trashbinRef);
 			await trashbinList.forEach(async (trashbin) => {
 				const binModel = new BinDataModel();
-				const data = await binModel.defaultBinData(trashbin.id);
+				const data = await binModel.defaultBinData(trashbin.id, trashbin.type);
 				const prefix = createDateId();
 				const docName = prefix + "_" + trashbin.id;
 				await setDoc(doc(db, "bin", docName), data);

@@ -1,3 +1,5 @@
+const { serverTimestamp } = require("firebase/firestore");
+
 class BinDataModel {
   constructor(capacity, type, frequency, trashbin, timestamp) {
     this.capacity = capacity,
@@ -6,13 +8,13 @@ class BinDataModel {
     this.trashbin = trashbin,
     this.timestamp = timestamp
   }
-  async defaultBinData(trashbin_name) {
+  async defaultBinData(trashbin_name, type) {
     return {
       capacity: 0,
-      type: "",
+      type: type,
       frequency: 0,
       trashbin: trashbin_name,
-      timestamp: ""
+      timestamp: serverTimestamp()
     }
   }
   async getBinData() {

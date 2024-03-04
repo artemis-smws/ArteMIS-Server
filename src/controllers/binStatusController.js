@@ -78,9 +78,9 @@ exports.BinStatusController = {
 	},
 	getLatestBinStatus: async (req, res) => {
 		try {
-			const trashbin_name = "trashbin/" + req.params.trashbin_name;
-			const q = query(binRef, where("trashbin", "==", trashbin_name));
+			const q = query(binRef, orderBy("timestamp"), where("trashbin", "==", req.params.trashbin_name), limit(1));
 			const data = await CRUD.readAll(q);
+			console.log(data)
 			res.send(data);
 		} catch (err) {
 			res.status(500).send({ error: err.message });
