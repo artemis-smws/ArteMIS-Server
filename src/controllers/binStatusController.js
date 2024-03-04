@@ -8,6 +8,7 @@ const {
 	query,
 	limit,
 	setDoc,
+	getCountFromServer,
 } = require("firebase/firestore");
 const createDateId = require("./../utils/createDateId");
 // const Bin = require("../models/bin");
@@ -78,7 +79,12 @@ exports.BinStatusController = {
 	},
 	getLatestBinStatus: async (req, res) => {
 		try {
-			const q = query(binRef, orderBy("timestamp"), where("trashbin", "==", req.params.trashbin_name), limit(1));
+			if(req.params.trashbin_name === undefined){
+				res.status(400).send({ error: "Please provide trashbin name" });
+			}
+			const trashbinRef = collection(db, "trashbin");
+			const binCount = await getCountFromServer(trashbinRef)
+			const q = query(binRef, orderBy("timestamp", "desc"), limit(binCount.data().count));
 			const data = await CRUD.readAll(q);
 			console.log(data)
 			res.send(data);
@@ -92,7 +98,7 @@ exports.BinStatusController = {
 			const trashbinList = await CRUD.readAll(trashbinRef);
 			await trashbinList.forEach(async (trashbin) => {
 				const binModel = new BinDataModel();
-				const data = await binModel.defaultBinData(trashbin.id);
+				const data = await binModel.defaultBinData(trashbin.id, trashbin.type);
 				const prefix = createDateId();
 				const docName = prefix + "_" + trashbin.id;
 				await setDoc(doc(db, "bin", docName), data);
