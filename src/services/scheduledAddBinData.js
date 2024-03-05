@@ -13,7 +13,14 @@ exports.AddBinData = functions.pubsub
 		try {
 			const trashbinRef = collection(db, "trashbin");
 			const trashbinList = await CRUD.readAll(trashbinRef);
-			
+			await trashbinList.forEach(async (trashbin) => {
+				const binModel = new BinDataModel();
+				const data = await binModel.defaultBinData(trashbin.id);
+				const prefix = createDateId();
+				const docName = prefix + "_" + trashbin.id;
+				await setDoc(doc(db, "bin", docName), data);
+				console.log("successfully posted");
+			});
 			return null;
 		} catch (e) {
 			console.log(e.message);

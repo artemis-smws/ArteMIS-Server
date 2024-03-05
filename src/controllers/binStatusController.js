@@ -53,33 +53,31 @@ exports.BinStatusController = {
 		try {
 			const prefix = createDateId();
 			const id = prefix + "_" + req.params.id;
-			// send data to logs table
-			const response1 = await CRUD.create(logRef, {
-				frequency: req.body.frequency,
-				capacity: req.body.capacity,
-				timestamp: serverTimestamp(),
-				trashbin: req.params.id,
-				type: req.body.type,
-			});
-			console.log(response1);
-			console.log("Succcessfully added to logs table");
+			// send data to trashbin table
+			const trashbinDocRef = doc(db, "trashbin", req.params.id)
+			const response_1 = await CRUD.update(trashbinDocRef, {
+				capacity  : req.body.capacity,
+				frequency : req.body.frequency
+			})
+			console.log("Successfully updated the trashbin collection")
 			// send data to bin table
 			const docRef = doc(db, "bin", id);
-			const data = await CRUD.update(docRef, {
+			const response_2 = await CRUD.update(docRef, {
 				frequency: req.body.frequency,
 				capacity: req.body.capacity,
 				timestamp: serverTimestamp(),
 				trashbin: req.params.id,
 				type: req.body.type,
 			});
-			res.send(data);
+			console.log("Successfully updated the bin collection")
+			res.send(response_1);
 		} catch (err) {
 			res.status(500).send({ error: err.message });
 		}
 	},
 	getLatestBinStatus: async (req, res) => {
 		try {
-			const trashbinRef = collection(db, "trashbin");
+		const trashbinRef = collection(db, "trashbin");
 			const binCount = await getCountFromServer(trashbinRef)
 			const q = query(binRef, orderBy("timestamp", "desc"), limit(binCount.data().count));
 			const data = await CRUD.readAll(q);
