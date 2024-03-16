@@ -1,6 +1,7 @@
 const { collection, queryEqual, doc, refEqual } = require("firebase/firestore");
 const db = require("../config/firebase");
 const { getLatest } = require("../utils/getLatest");
+const getBuildingName = require("../utils/getBuildingName");
 
 exports.calculateTotalMiddleware = async (req, res, next) => {
   const { building_name, weight } = req.body;
@@ -10,27 +11,13 @@ exports.calculateTotalMiddleware = async (req, res, next) => {
   let totalRecyclableVar = 0;
   let totalResidualVar = 0;
   let totalInfectiousVar = 0;
-  const buildingListVar = [];
 
   const wasteRef = collection(db, "waste");
   const latestDoc = await getLatest(wasteRef);
-
-  const docKeys = Object.keys(latestDoc[0]);
-  docKeys.forEach((key) => {
-    if (
-      key != "overall_weight" &&
-      key != "id" &&
-      key != "createdAt" &&
-      key != "overall_residual" &&
-      key != "overall_recyclable" &&
-      key != "overall_biodegradable" &&
-      key != "overall_infectious"
-    ) {
-      buildingListVar.push(key);
-    }
-  });
+  
+  const buildingList = getBuildingName(latestDoc)
   // add overall total weights excluding the current building on input (even if 0)
-  buildingListVar.forEach(building => {
+  buildingList.forEach(building => {
     if (building != building_name) {
       totalWeightVar += latestDoc[0][building].weight.total || 0
       totalRecyclableVar += latestDoc[0][building].weight.recyclable.total || 0

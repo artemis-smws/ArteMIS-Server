@@ -11,7 +11,7 @@ const {
 	limit,
 } = require("firebase/firestore");
 const createDateId = require("../utils/createDateId");
-const { defaultWasteSchema } = require("../models/defaultWasteSchema");
+const { defaultWasteSchemaSchedule } = require("../models/defaultWasteSchema");
 
 // put predefined document field for the day
 exports.wasteSchedPost = functions.pubsub
@@ -19,7 +19,7 @@ exports.wasteSchedPost = functions.pubsub
 	.timeZone("Asia/Manila")
 	.onRun(async (context) => {
 		try {
-			const data = await defaultWasteSchema();
+			const data = await defaultWasteSchemaSchedule();
 			const docName = createDateId();
 			await setDoc(doc(db, "waste", docName), data);
 			console.log("successfully posted");
